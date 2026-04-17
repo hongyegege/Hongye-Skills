@@ -1,0 +1,94 @@
+{
+  "name": "prd-flow",
+  "skillId": "prd_flow",
+  "displayName": "PRD Flow",
+  "version": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "entrypoint": "prd_flow.run",
+  "description": "通过统一协议完成需求澄清、需求分析与 PRD 生成闭环的产品化 Skill",
+  "category": "productivity",
+  "tags": [
+    "prd",
+    "requirements",
+    "analysis",
+    "clarification",
+    "markdown",
+    "product-management"
+  ],
+  "modes": [
+    "auto",
+    "full",
+    "clarify_only",
+    "analyze_only",
+    "render_only",
+    "review_only"
+  ],
+  "lifecycleActions": [
+    "start",
+    "continue",
+    "retry",
+    "regenerate",
+    "abort"
+  ],
+  "outputFormats": [
+    "json",
+    "markdown"
+  ],
+  "artifacts": [
+    "clarification",
+    "analysis",
+    "render",
+    "mermaid"
+  ],
+  "defaultOptions": {
+    "language": "zh-CN",
+    "prdTemplate": "standard",
+    "maxClarificationRounds": 2,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  },
+  "hosts": [
+    {
+      "name": "OpenClaw",
+      "recommendedMode": "full",
+      "notes": "适合作为工作流节点编排，建议由宿主处理多轮澄清。"
+    },
+    {
+      "name": "Cursor",
+      "recommendedMode": "full",
+      "notes": "适合在工作区内直接生成并写入 PRD Markdown 文件。"
+    },
+    {
+      "name": "Claude Code",
+      "recommendedMode": "full",
+      "notes": "适合结合本地资料、docs 目录与结构化分析结果一起落盘。"
+    }
+  ],
+  "schemaRefs": {
+    "request": "./schemas/request.schema.json",
+    "response": "./schemas/response.schema.json"
+  },
+  "files": {
+    "skillDoc": "./SKILL.md",
+    "protocolDoc": "./PRD Flow 接口文档.md",
+    "examplesRoot": "./examples",
+    "promptsRoot": "./prompts"
+  },
+  "prompts": {
+    "orchestrator": "./prompts/Orchestrator.md",
+    "clarifier": "./prompts/clarifier.md",
+    "analyzer": "./prompts/analyzer.md",
+    "renderer": "./prompts/renderer.md"
+  },
+  "examples": {
+    "openclaw": "./examples/openclaw",
+    "cursor": "./examples/Cursor",
+    "claudeCode": "./examples/Claude Code"
+  }
+}

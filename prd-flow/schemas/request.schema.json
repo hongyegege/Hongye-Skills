@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eaglelab.ai/schemas/prd-flow/request.schema.json",
+  "title": "PRD Flow Request Schema",
+  "description": "Schema for prd_flow.run request payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "skillId",
+    "requestId",
+    "sessionId",
+    "action",
+    "mode",
+    "input"
+  ],
+  "properties": {
+    "protocolVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "skillId": {
+      "type": "string",
+      "const": "prd_flow"
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sessionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action": {
+      "type": "string",
+      "enum": ["start", "continue", "retry", "regenerate", "abort"]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["auto", "full", "clarify_only", "analyze_only", "render_only", "review_only"]
+    },
+    "host": {
+      "$ref": "#/$defs/host"
+    },
+    "input": {
+      "$ref": "#/$defs/input"
+    },
+    "state": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/state"
+        }
+      ]
+    },
+    "options": {
+      "$ref": "#/$defs/options"
+    }
+  },
+  "$defs": {
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string"
+        },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "canRenderMarkdown": { "type": "boolean" },
+            "canStoreState": { "type": "boolean" },
+            "canUploadFiles": { "type": "boolean" },
+            "canWriteFiles": { "type": "boolean" },
+            "canShowForms": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["userRequest", "inputType"],
+      "properties": {
+        "userRequest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputType": {
+          "type": "string",
+          "enum": ["text", "image", "excel", "mixed"]
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attachment"
+          },
+          "default": []
+        },
+        "extractedContent": {
+          "$ref": "#/$defs/extractedContent"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        }
+      }
+    },
+    "attachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "type", "mimeType", "role"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "image", "excel", "pdf", "mixed"]
+        },
+        "mimeType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": ["source", "reference", "supporting"]
+        },
+        "uri": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "extractedContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ocrText": {
+          "type": "string",
+          "default": ""
+        },
+        "imageSummaries": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table"
+          },
+          "default": []
+        }
+      },
+      "default": {
+        "ocrText": "",
+        "imageSummaries": [],
+        "tables": []
+      }
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sheetName", "headers", "rows"],
+      "properties": {
+        "sheetName": {
+          "type": "string"
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": ["iot", "b_end", "c_end", "general"]
+        },
+        "businessLine": {
+          "type": "string"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "targetPlatform": {
+          "type": "string",
+          "enum": ["Web", "App", "MiniProgram", "Desktop", "Mixed"]
+        },
+        "additionalContext": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": ["intake", "clarify", "analyze", "render", "done", "failed"]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "waiting_input",
+            "waiting_clarification",
+            "ready_for_analysis",
+            "ready_for_render",
+            "completed",
+            "failed",
+            "aborted"
+          ]
+        },
+        "iteration": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clarification": {
+          "$ref": "#/$defs/clarificationState"
+        },
+        "analysisResult": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "object" }
+          ]
+        },
+        "renderResult": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "object" }
+          ]
+        }
+      }
+    },
+    "clarificationState": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "round": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "askedQuestions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/askedQuestion"
+          },
+          "default": []
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clarificationAnswer"
+          },
+          "default": []
+        },
+        "missingFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/missingField"
+          },
+          "default": []
+        }
+      }
+    },
+    "askedQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "dimension", "label"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "dimension": {
+          "$ref": "#/$defs/missingField"
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "clarificationAnswer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["questionId", "answer"],
+      "properties": {
+        "questionId": {
+          "type": "string"
+        },
+        "answer": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "boolean" },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  { "type": "string" },
+                  { "type": "number" },
+                  { "type": "boolean" }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "missingField": {
+      "type": "string",
+      "enum": [
+        "goal",
+        "persona",
+        "scope",
+        "flow",
+        "permission",
+        "constraint",
+        "integration",
+        "metric",
+        "risk"
+      ]
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "type": "string",
+          "default": "zh-CN"
+        },
+        "prdTemplate": {
+          "type": "string",
+          "enum": ["lite", "standard", "full"],
+          "default": "standard"
+        },
+        "maxClarificationRounds": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 2
+        },
+        "allowDraftWithPending": {
+          "type": "boolean",
+          "default": true
+        },
+        "requireDiagram": {
+          "type": "string",
+          "enum": ["auto", "always", "never"],
+          "default": "auto"
+        },
+        "strictJson": {
+          "type": "boolean",
+          "default": true
+        },
+        "maskSensitiveData": {
+          "type": "boolean",
+          "default": true
+        },
+        "outputFormats": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["json", "markdown"]
+          },
+          "uniqueItems": true,
+          "default": ["json", "markdown"]
+        }
+      }
+    }
+  }
+}

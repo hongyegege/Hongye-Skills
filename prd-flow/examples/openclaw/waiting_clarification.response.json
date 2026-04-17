@@ -1,0 +1,57 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_oc_001",
+  "sessionId": "session_oc_001",
+  "status": "waiting_clarification",
+  "stage": "clarify",
+  "nextAction": "answer_questions",
+  "message": "建议先补充需求范围与权限边界。",
+  "result": {
+    "clarification": {
+      "needClarification": true,
+      "readyForAnalysis": false,
+      "round": 1,
+      "remainingRounds": 1,
+      "missingFields": [
+        "scope",
+        "permission"
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "dimension": "scope",
+          "label": "本次需求是否包含异常工单派发、处理反馈、关闭确认全流程？",
+          "type": "single_select",
+          "required": true,
+          "priority": "high",
+          "options": [
+            {
+              "id": "opt1",
+              "label": "仅记录异常"
+            },
+            {
+              "id": "opt2",
+              "label": "记录并派发"
+            },
+            {
+              "id": "opt3",
+              "label": "完整闭环"
+            }
+          ],
+          "reason": "范围不同会显著影响流程和功能拆解。"
+        }
+      ],
+      "summary": "范围与权限边界仍不清晰。",
+      "stopReason": null
+    },
+    "analysis": null,
+    "render": null
+  },
+  "quality": {
+    "analysisConfidence": "medium",
+    "schemaValid": true,
+    "warnings": []
+  },
+  "error": null
+}

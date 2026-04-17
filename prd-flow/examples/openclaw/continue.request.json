@@ -1,0 +1,75 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_oc_002",
+  "sessionId": "session_oc_001",
+  "action": "continue",
+  "mode": "full",
+  "host": {
+    "name": "OpenClaw",
+    "version": "1.0.0",
+    "capabilities": {
+      "canRenderMarkdown": true,
+      "canStoreState": true,
+      "canUploadFiles": true,
+      "canWriteFiles": false,
+      "canShowForms": true
+    }
+  },
+  "input": {
+    "userRequest": "请帮我输出一个面向园区运维场景的设备巡检异常闭环管理 PRD。",
+    "inputType": "text",
+    "attachments": [],
+    "extractedContent": {
+      "ocrText": "",
+      "imageSummaries": [],
+      "tables": []
+    },
+    "context": {
+      "domain": "iot",
+      "businessLine": "园区物联平台",
+      "projectName": "设备运维平台",
+      "targetPlatform": "Web",
+      "additionalContext": [
+        "面向 B 端运维人员"
+      ]
+    }
+  },
+  "state": {
+    "stage": "clarify",
+    "status": "waiting_clarification",
+    "iteration": 1,
+    "clarification": {
+      "round": 1,
+      "askedQuestions": [
+        {
+          "id": "q1",
+          "dimension": "scope",
+          "label": "本次需求是否包含异常工单派发、处理反馈、关闭确认全流程？"
+        }
+      ],
+      "answers": [
+        {
+          "questionId": "q1",
+          "answer": "包含完整闭环"
+        }
+      ],
+      "missingFields": []
+    },
+    "analysisResult": null,
+    "renderResult": null
+  },
+  "options": {
+    "language": "zh-CN",
+    "prdTemplate": "standard",
+    "maxClarificationRounds": 2,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cc_001",
+  "sessionId": "session_cc_001",
+  "status": "waiting_clarification",
+  "stage": "clarify",
+  "nextAction": "answer_questions",
+  "message": "建议先补充角色与权限定义后再分析。",
+  "result": {
+    "clarification": {
+      "needClarification": true,
+      "readyForAnalysis": false,
+      "round": 1,
+      "remainingRounds": 1,
+      "missingFields": [
+        "permission"
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "dimension": "permission",
+          "label": "请明确巡检人员、责任人、主管、管理员在闭环中的查看与操作权限。",
+          "type": "text",
+          "required": true,
+          "priority": "high",
+          "reason": "权限差异会影响核心流程和状态流转定义。"
+        }
+      ],
+      "summary": "当前权限边界不清晰。",
+      "stopReason": null
+    },
+    "analysis": null,
+    "render": null
+  },
+  "quality": {
+    "analysisConfidence": "medium",
+    "schemaValid": true,
+    "warnings": []
+  },
+  "error": null
+}

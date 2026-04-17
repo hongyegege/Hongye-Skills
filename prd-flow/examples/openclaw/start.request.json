@@ -1,0 +1,52 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_oc_001",
+  "sessionId": "session_oc_001",
+  "action": "start",
+  "mode": "full",
+  "host": {
+    "name": "OpenClaw",
+    "version": "1.0.0",
+    "capabilities": {
+      "canRenderMarkdown": true,
+      "canStoreState": true,
+      "canUploadFiles": true,
+      "canWriteFiles": false,
+      "canShowForms": true
+    }
+  },
+  "input": {
+    "userRequest": "请帮我输出一个面向园区运维场景的设备巡检异常闭环管理 PRD。",
+    "inputType": "text",
+    "attachments": [],
+    "extractedContent": {
+      "ocrText": "",
+      "imageSummaries": [],
+      "tables": []
+    },
+    "context": {
+      "domain": "iot",
+      "businessLine": "园区物联平台",
+      "projectName": "设备运维平台",
+      "targetPlatform": "Web",
+      "additionalContext": [
+        "面向 B 端运维人员"
+      ]
+    }
+  },
+  "state": null,
+  "options": {
+    "language": "zh-CN",
+    "prdTemplate": "standard",
+    "maxClarificationRounds": 2,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  }
+}

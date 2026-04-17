@@ -1,0 +1,52 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cursor_start_001",
+  "sessionId": "session_cursor_001",
+  "action": "start",
+  "mode": "full",
+  "host": {
+    "name": "Cursor",
+    "version": "0.48.0",
+    "capabilities": {
+      "canRenderMarkdown": true,
+      "canStoreState": true,
+      "canUploadFiles": true,
+      "canWriteFiles": true,
+      "canShowForms": false
+    }
+  },
+  "input": {
+    "userRequest": "请帮我输出一个面向商用楼宇运维团队的设备告警闭环管理 PRD，并尽可能给出标准版结构。",
+    "inputType": "text",
+    "attachments": [],
+    "extractedContent": {
+      "ocrText": "",
+      "imageSummaries": [],
+      "tables": []
+    },
+    "context": {
+      "domain": "iot",
+      "businessLine": "楼宇能源与设备运维平台",
+      "projectName": "告警中心",
+      "targetPlatform": "Web",
+      "additionalContext": [
+        "输出结果需要可直接保存到 docs/prd 目录"
+      ]
+    }
+  },
+  "state": null,
+  "options": {
+    "language": "zh-CN",
+    "prdTemplate": "standard",
+    "maxClarificationRounds": 1,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  }
+}

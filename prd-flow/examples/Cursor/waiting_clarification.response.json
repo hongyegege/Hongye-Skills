@@ -1,0 +1,42 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cursor_start_001",
+  "sessionId": "session_cursor_001",
+  "status": "waiting_clarification",
+  "stage": "clarify",
+  "nextAction": "answer_questions",
+  "message": "建议先补充角色权限边界后再进入分析。",
+  "result": {
+    "clarification": {
+      "needClarification": true,
+      "readyForAnalysis": false,
+      "round": 1,
+      "remainingRounds": 0,
+      "missingFields": [
+        "permission"
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "dimension": "permission",
+          "label": "告警闭环涉及哪些角色，以及各角色的可见范围和操作权限？",
+          "type": "text",
+          "required": true,
+          "priority": "high",
+          "reason": "权限边界会直接影响页面功能和操作限制。"
+        }
+      ],
+      "summary": "当前缺少权限模型信息。",
+      "stopReason": null
+    },
+    "analysis": null,
+    "render": null
+  },
+  "quality": {
+    "analysisConfidence": "medium",
+    "schemaValid": true,
+    "warnings": []
+  },
+  "error": null
+}

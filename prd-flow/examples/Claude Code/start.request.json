@@ -1,0 +1,73 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cc_001",
+  "sessionId": "session_cc_001",
+  "action": "start",
+  "mode": "full",
+  "host": {
+    "name": "Claude Code",
+    "version": "1.0.0",
+    "capabilities": {
+      "canRenderMarkdown": true,
+      "canStoreState": true,
+      "canUploadFiles": true,
+      "canWriteFiles": true,
+      "canShowForms": false
+    }
+  },
+  "input": {
+    "userRequest": "请结合现有需求材料，生成一个面向园区设备工单协同闭环的标准版 PRD。",
+    "inputType": "mixed",
+    "attachments": [
+      {
+        "id": "file_001",
+        "name": "需求纪要.md",
+        "type": "text",
+        "mimeType": "text/markdown",
+        "role": "source",
+        "uri": "workspace://docs/input/需求纪要.md",
+        "description": "业务讨论纪要"
+      },
+      {
+        "id": "file_002",
+        "name": "流程草图.png",
+        "type": "image",
+        "mimeType": "image/png",
+        "role": "supporting",
+        "uri": "workspace://docs/input/流程草图.png",
+        "description": "流程草图截图"
+      }
+    ],
+    "extractedContent": {
+      "ocrText": "异常发现后需要派发给运维责任人，处理完成后由主管确认关闭。",
+      "imageSummaries": [
+        "流程草图包含异常登记、派发、处理反馈、关闭确认四个阶段"
+      ],
+      "tables": []
+    },
+    "context": {
+      "domain": "iot",
+      "businessLine": "园区设备运营平台",
+      "projectName": "工单协同中心",
+      "targetPlatform": "Web",
+      "additionalContext": [
+        "结果需要保存到 docs/prd/ 和 docs/analysis/"
+      ]
+    }
+  },
+  "state": null,
+  "options": {
+    "language": "zh-CN",
+    "prdTemplate": "full",
+    "maxClarificationRounds": 2,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  }
+}

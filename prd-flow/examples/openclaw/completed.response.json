@@ -1,0 +1,50 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_oc_002",
+  "sessionId": "session_oc_001",
+  "status": "completed",
+  "stage": "done",
+  "nextAction": "show_prd",
+  "message": "已完成需求分析与 PRD 生成。",
+  "result": {
+    "clarification": null,
+    "analysis": {
+      "meta": {
+        "domain": "iot",
+        "complexity": "medium",
+        "analysisConfidence": "high",
+        "template": "standard"
+      }
+    },
+    "render": {
+      "title": "设备巡检异常闭环管理 PRD",
+      "summary": "已生成标准版 PRD。",
+      "markdown": "# 设备巡检异常闭环管理 PRD\n\n## 1. 需求背景\n...",
+      "artifacts": {
+        "hasMermaid": true,
+        "diagramType": "flowchart",
+        "mermaid": "flowchart TD\nA[开始] --> B[异常记录] --> C[工单派发] --> D[处理反馈] --> E[关闭确认] --> F[结束]",
+        "sections": [
+          "需求背景",
+          "角色与场景",
+          "功能需求",
+          "流程说明"
+        ]
+      },
+      "files": [
+        {
+          "name": "prd_设备巡检异常闭环管理.md",
+          "contentType": "text/markdown",
+          "suggestedPath": "./output/prd_设备巡检异常闭环管理.md"
+        }
+      ]
+    }
+  },
+  "quality": {
+    "analysisConfidence": "high",
+    "schemaValid": true,
+    "warnings": []
+  },
+  "error": null
+}

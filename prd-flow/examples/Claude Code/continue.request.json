@@ -1,0 +1,73 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cc_002",
+  "sessionId": "session_cc_001",
+  "action": "continue",
+  "mode": "full",
+  "host": {
+    "name": "Claude Code",
+    "version": "1.0.0",
+    "capabilities": {
+      "canRenderMarkdown": true,
+      "canStoreState": true,
+      "canUploadFiles": true,
+      "canWriteFiles": true,
+      "canShowForms": false
+    }
+  },
+  "input": {
+    "userRequest": "请结合现有需求材料，生成一个面向园区设备工单协同闭环的标准版 PRD。",
+    "inputType": "mixed",
+    "attachments": [],
+    "extractedContent": {
+      "ocrText": "",
+      "imageSummaries": [],
+      "tables": []
+    },
+    "context": {
+      "domain": "iot",
+      "businessLine": "园区设备运营平台",
+      "projectName": "工单协同中心",
+      "targetPlatform": "Web",
+      "additionalContext": []
+    }
+  },
+  "state": {
+    "stage": "clarify",
+    "status": "waiting_clarification",
+    "iteration": 1,
+    "clarification": {
+      "round": 1,
+      "askedQuestions": [
+        {
+          "id": "q1",
+          "dimension": "permission",
+          "label": "闭环流程涉及哪些角色以及权限边界？"
+        }
+      ],
+      "answers": [
+        {
+          "questionId": "q1",
+          "answer": "角色包括巡检人员、运维责任人、主管、管理员。主管负责关闭确认。"
+        }
+      ],
+      "missingFields": []
+    },
+    "analysisResult": null,
+    "renderResult": null
+  },
+  "options": {
+    "language": "zh-CN",
+    "prdTemplate": "full",
+    "maxClarificationRounds": 2,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  }
+}

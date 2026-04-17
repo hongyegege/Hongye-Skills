@@ -1,0 +1,51 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cursor_continue_001",
+  "sessionId": "session_cursor_001",
+  "status": "completed",
+  "stage": "done",
+  "nextAction": "show_prd",
+  "message": "已生成 PRD，可直接写入工作区。",
+  "result": {
+    "clarification": null,
+    "analysis": {
+      "meta": {
+        "domain": "iot",
+        "complexity": "medium",
+        "analysisConfidence": "high",
+        "template": "standard"
+      }
+    },
+    "render": {
+      "title": "设备告警闭环管理 PRD",
+      "summary": "适用于商用楼宇运维团队。",
+      "markdown": "# 设备告警闭环管理 PRD\n\n## 1. 需求背景\n...",
+      "artifacts": {
+        "hasMermaid": true,
+        "diagramType": "flowchart",
+        "mermaid": "flowchart TD\nA[告警产生] --> B[告警派发] --> C[处理反馈] --> D[关闭确认]",
+        "sections": [
+          "需求背景",
+          "角色与场景",
+          "功能需求",
+          "风险与兜底",
+          "待确认问题"
+        ]
+      },
+      "files": [
+        {
+          "name": "设备告警闭环管理_PRD.md",
+          "contentType": "text/markdown",
+          "suggestedPath": "./docs/prd/设备告警闭环管理_PRD.md"
+        }
+      ]
+    }
+  },
+  "quality": {
+    "analysisConfidence": "high",
+    "schemaValid": true,
+    "warnings": []
+  },
+  "error": null
+}

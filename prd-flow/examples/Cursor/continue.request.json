@@ -1,0 +1,73 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cursor_continue_001",
+  "sessionId": "session_cursor_001",
+  "action": "continue",
+  "mode": "full",
+  "host": {
+    "name": "Cursor",
+    "version": "0.48.0",
+    "capabilities": {
+      "canRenderMarkdown": true,
+      "canStoreState": true,
+      "canUploadFiles": true,
+      "canWriteFiles": true,
+      "canShowForms": false
+    }
+  },
+  "input": {
+    "userRequest": "请帮我输出一个面向商用楼宇运维团队的设备告警闭环管理 PRD，并尽可能给出标准版结构。",
+    "inputType": "text",
+    "attachments": [],
+    "extractedContent": {
+      "ocrText": "",
+      "imageSummaries": [],
+      "tables": []
+    },
+    "context": {
+      "domain": "iot",
+      "businessLine": "楼宇能源与设备运维平台",
+      "projectName": "告警中心",
+      "targetPlatform": "Web",
+      "additionalContext": []
+    }
+  },
+  "state": {
+    "stage": "clarify",
+    "status": "waiting_clarification",
+    "iteration": 1,
+    "clarification": {
+      "round": 1,
+      "askedQuestions": [
+        {
+          "id": "q1",
+          "dimension": "permission",
+          "label": "告警闭环涉及哪些角色，以及各角色的可见范围和操作权限？"
+        }
+      ],
+      "answers": [
+        {
+          "questionId": "q1",
+          "answer": "角色包括值班人员、主管、管理员。值班人员仅可处理本人告警，主管可查看并关闭本组告警，管理员可查看全局。"
+        }
+      ],
+      "missingFields": []
+    },
+    "analysisResult": null,
+    "renderResult": null
+  },
+  "options": {
+    "language": "zh-CN",
+    "prdTemplate": "standard",
+    "maxClarificationRounds": 1,
+    "allowDraftWithPending": true,
+    "requireDiagram": "auto",
+    "strictJson": true,
+    "maskSensitiveData": true,
+    "outputFormats": [
+      "json",
+      "markdown"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "protocolVersion": "1.0.0",
+  "skillId": "prd_flow",
+  "requestId": "req_cc_002",
+  "sessionId": "session_cc_001",
+  "status": "completed",
+  "stage": "done",
+  "nextAction": "show_prd",
+  "message": "已生成完整分析结果与 PRD 文档。",
+  "result": {
+    "clarification": null,
+    "analysis": {
+      "meta": {
+        "domain": "iot",
+        "complexity": "high",
+        "analysisConfidence": "high",
+        "template": "full"
+      },
+      "openQuestions": [
+        {
+          "id": "OQ-001",
+          "question": "工单关闭后是否支持重新打开？",
+          "impact": "影响状态机设计与权限策略",
+          "severity": "medium"
+        }
+      ]
+    },
+    "render": {
+      "title": "园区设备工单协同闭环 PRD",
+      "summary": "已生成完整版 PRD，并建议同步保存分析结果。",
+      "markdown": "# 园区设备工单协同闭环 PRD\n\n## 1. 需求背景\n...",
+      "artifacts": {
+        "hasMermaid": true,
+        "diagramType": "flowchart",
+        "mermaid": "flowchart TD\nA[巡检发现异常] --> B[登记工单] --> C[派发责任人] --> D[处理反馈] --> E[主管确认关闭]",
+        "sections": [
+          "需求背景",
+          "角色与场景",
+          "功能需求",
+          "流程说明",
+          "待确认问题"
+        ]
+      },
+      "files": [
+        {
+          "name": "园区设备工单协同闭环_PRD.md",
+          "contentType": "text/markdown",
+          "suggestedPath": "./docs/prd/园区设备工单协同闭环_PRD.md"
+        },
+        {
+          "name": "园区设备工单协同闭环_analysis.json",
+          "contentType": "application/json",
+          "suggestedPath": "./docs/analysis/园区设备工单协同闭环_analysis.json"
+        }
+      ]
+    }
+  },
+  "quality": {
+    "analysisConfidence": "high",
+    "schemaValid": true,
+    "warnings": [
+      "仍存在 1 个待确认问题，建议评审前补齐。"
+    ]
+  },
+  "error": null
+}
