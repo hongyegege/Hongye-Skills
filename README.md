@@ -9,11 +9,10 @@
 | # | 技能名称 | 一句话说明 | 适用场景 |
 |---|----------|-----------|----------|
 | 1 | [proposal-review-panel](#1-proposal-review-panel-五维评审团) | 五维评审团，对智能家居/IoT 洞察报告进行多角色交叉评审 | 报告评审、方案审查 |
-| 2 | [prd-flow](#2-prd-flow-prd-需求流) | PRD 需求闭环：需求澄清 → 需求分析 → PRD 渲染 | 产品需求文档生成 |
-| 3 | [product-roadmap-writer](#3-product-roadmap-writer-五看三定) | 基于「五看三定」方法论生成 B2B/行业产品规划路线图 | 产品规划、路线图撰写 |
-| 4 | [daily-review-manager](#4-daily-review-manager-每日复盘) | 接收、记录、整理每日复盘，自动生成周报/月报 | 个人复盘、知识管理 |
-| 5 | [meeting-writer](#5-meeting-writer-会议纪要生成) | 将会议内容整理为标准格式会议纪要，自动创建飞书文档 | 会议纪要、Meeting Minutes |
-| 6 | [prd-workflow](#6-prd-workflow-prd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入解析 + 模板参照 + 逻辑重构 + 飞书文档创建 | PRD 文档生成、需求整理
+| 2 | [product-roadmap-writer](#2-product-roadmap-writer五看三定) | 基于「五看三定」方法论生成 B2B/行业产品规划路线图 | 产品规划、路线图撰写 |
+| 3 | [daily-review-manager](#3-daily-review-manager每日复盘) | 接收、记录、整理每日复盘，自动生成周报/月报 | 个人复盘、知识管理 |
+| 4 | [meeting-writer](#4-meeting-writer会议纪要生成) | 将会议内容整理为标准格式会议纪要，自动创建飞书文档 | 会议纪要、Meeting Minutes |
+| 5 | [prd-workflow](#5-prd-workflowprd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入解析 + 模板参照 + 逻辑重构 + 飞书文档创建 | PRD 文档生成、需求整理
 
 ---
 
@@ -55,66 +54,7 @@
 
 ---
 
-## 2. PRD-Flow（PRD 需求流）
-
-> 🏷️ 产品需求 · PRD 生成 · 需求澄清 · 结构化分析
-
-### 功能简介
-
-通过统一协议完成 **需求澄清 → 需求分析 → PRD 生成** 的闭环。支持多种执行模式，适配 IoT / B 端 / C 端场景，输出标准 Markdown PRD 文档（支持 Mermaid 流程图）。
-
-### 核心能力
-
-| 模块 | 职责 |
-|------|------|
-| **Clarifier（澄清）** | 判断信息是否充分，用最少高价值问题补齐缺口 |
-| **Analyzer（分析）** | 将需求转为结构化 JSON，区分已确认/推断/待确认三类信息 |
-| **Renderer（渲染）** | 将分析结果渲染为 Markdown PRD，支持 Mermaid 流程图 |
-| **Orchestrator（编排）** | 根据 action/mode/state 决定下一步，不伪造内容 |
-
-### 执行模式
-
-| 模式 | 行为 |
-|------|------|
-| `auto` | 自动判断执行路径，按澄清→分析→渲染顺序推进 |
-| `full` | 执行完整闭环 |
-| `clarify_only` | 仅澄清 |
-| `analyze_only` | 仅分析 |
-| `render_only` | 仅渲染（需已有分析结果） |
-
-### 输出结构
-
-生成的 PRD 包含 9 个标准章节：
-1. 需求背景
-2. 角色与场景
-3. 功能需求
-4. 数据与集成
-5. 指标建议
-6. 风险与兜底
-7. 流程说明
-8. 待确认问题
-9. 建议项
-
-### 使用方式
-
-1. 将 `prd-flow/` 文件夹复制到 OpenClaw 的 `skills/` 目录
-2. 调用 `prd_flow.run`，传入 action（start/continue）和 mode
-3. 按引导完成需求澄清 → 分析 → PRD 生成
-
-### 依赖文件
-
-| 文件 | 说明 |
-|------|------|
-| `prompts/Orchestrator.md` | 编排调度逻辑 |
-| `prompts/clarifier.md` | 澄清判断与问题生成 |
-| `prompts/analyzer.md` | 结构化分析逻辑 |
-| `prompts/renderer.md` | Markdown PRD 渲染逻辑 |
-| `schemas/request.schema.json` | 请求 Schema |
-| `schemas/response.schema.json` | 响应 Schema |
-
----
-
-## 3. product-roadmap-writer（五看三定）
+## 2. product-roadmap-writer（五看三定）
 
 > 🏷️ 产品规划 · 路线图 · 五看三定 · 战略规划
 
@@ -164,7 +104,7 @@
 
 ---
 
-## 4. daily-review-manager（每日复盘）
+## 3. daily-review-manager（每日复盘）
 
 > 🏷️ 个人复盘 · 日记 · 周报 · 月报 · 知识管理
 
@@ -210,7 +150,7 @@
 
 ---
 
-## 5. meeting-writer（会议纪要生成）
+## 4. meeting-writer（会议纪要生成）
 
 > 🏷️ 会议纪要 · Meeting Minutes · 飞书文档 · 结构化整理
 
@@ -247,7 +187,7 @@
 
 ---
 
-## 6. PRD-Workflow（PRD 端到端生成工作流）
+## 5. PRD-Workflow（PRD 端到端生成工作流）
 
 > 🏷️ 产品需求 · PRD 生成 · 端到端编排 · 多格式输入 · 逻辑重构
 
@@ -331,7 +271,7 @@ cp -r Hongye-Skills/<skill-name> ~/.openclaw/workspace/skills/
 
 | 日期 | 更新内容 |
 |------|----------|
-| 2026-05-19 | 新增 prd-workflow（PRD 端到端生成工作流） |
+| 2026-05-19 | 新增 prd-workflow（PRD 端到端生成工作流）；删除 prd-flow（已被 prd-workflow 替代） |
 | 2026-05-13 | 新增 meeting-writer（会议纪要生成） |
 | 2026-05-08 | 新增 proposal-review-panel（五维评审团） |
 | 2026-04-xx | 新增 prd-flow、product-roadmap-writer、daily-review-manager |
