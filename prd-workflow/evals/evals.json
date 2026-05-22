@@ -1,0 +1,122 @@
+{
+  "skill_name": "prd-workflow",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have an Excel file with feature requirements for multiple portable AC models (PSS fixed-frequency, PDS fixed-frequency, PDS inverter). Each row contains a feature name, feature description, and which models support it. The data is complete but unstructured — the same feature like temperature control is described differently across rows, and there's no consistent grouping. Please help me organize this into a standardized PRD with L1-L3 hierarchy, feature matrix with PK product comparison, and appendices.",
+      "expected_output": "A complete L1-L3 structured PRD with feature overview, function matrix organized by domain, PK product comparison table using ✔/✘ markers, interconnection/exclusion rules, and appendices.",
+      "assertions": [
+        {
+          "name": "l1_l3_structure",
+          "description": "Output follows a clear L1 (functional domain) → L2 (functional group) → L3 (specific feature) three-level hierarchy",
+          "type": "llm_judge"
+        },
+        {
+          "name": "pk_comparison_matrix",
+          "description": "Multi-product features use ✔/✘ comparison matrix with differences noted in remarks column",
+          "type": "llm_judge"
+        },
+        {
+          "name": "complete_sections",
+          "description": "PRD includes core sections: product overview, feature matrix, interconnection/exclusion rules, fault codes & messaging, certification strategy, and appendices",
+          "type": "llm_judge"
+        },
+        {
+          "name": "no_copy_paste",
+          "description": "Output is not a copy-paste of raw input — includes merged common items and extracted shared rules",
+          "type": "llm_judge"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's a PRD template from our existing product (Matter portable AC PSL/PDL/PDM). I need you to write a PRD for a new product (PSS/PDS series) based on this template structure. The new product has similar features but with some differences: the default cooling temperature is 16°C instead of 18°C, it supports heating mode up to 30°C, and there's a new Bluetooth generator (ICA) feature only on the inverter model. Please follow the template's section structure, table format, and appendix style.",
+      "expected_output": "A PRD for the new PSS/PDS products that mirrors the template's structure (sections, table formats, appendix style) while correctly incorporating the new product's unique features and differences.",
+      "assertions": [
+        {
+          "name": "template_structure_match",
+          "description": "Section structure, table format, and appendix style match the provided template",
+          "type": "llm_judge"
+        },
+        {
+          "name": "new_product_content",
+          "description": "Content reflects the new PSS/PDS product features, not copied from the template's original product",
+          "type": "llm_judge"
+        },
+        {
+          "name": "capability_extension",
+          "description": "New capabilities not in the template (e.g., Bluetooth generator/ICA, updated temperature ranges) are correctly added and documented",
+          "type": "llm_judge"
+        },
+        {
+          "name": "appendix_consistent",
+          "description": "Appendices (interconnection/exclusion rules, power-on/off state tables) follow the template's format and style",
+          "type": "llm_judge"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I'm giving you a messy set of feature descriptions for a commercial air conditioning product. The same temperature control logic is described in 3 different places with slightly different numbers (16-32°C in one place, 18-32°C in another, 16-30°C in a third). Wind speed settings are mentioned under both 'control' and 'mode' sections with conflicting defaults. Some rules contradict each other — e.g., one section says auto mode supports temperature adjustment, another says it doesn't. The PK product names are mixed with feature descriptions. Please help me reorganize this into a clean, standardized PRD.",
+      "expected_output": "A reorganized, deduplicated PRD with resolved conflicts, extracted common rules, and a clear logical structure without contradictions.",
+      "assertions": [
+        {
+          "name": "duplicate_merged",
+          "description": "Repeated feature descriptions (e.g., temperature logic mentioned 3 times) are merged into a single, unified description",
+          "type": "llm_judge"
+        },
+        {
+          "name": "conflicts_resolved",
+          "description": "Conflicting rules (e.g., different temperature ranges, contradictory auto mode behavior) are identified and either resolved or explicitly marked for confirmation",
+          "type": "llm_judge"
+        },
+        {
+          "name": "common_rules_extracted",
+          "description": "Features common across multiple products are extracted into independent modules rather than repeated under each product",
+          "type": "llm_judge"
+        },
+        {
+          "name": "logical_clarity",
+          "description": "Output is logically consistent — no contradictory statements remain in the final PRD",
+          "type": "llm_judge"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I have a simple feature checklist for a smart air conditioning product: 'needs network pairing (scan QR code), supports cooling/heating/dehumidification/fan/auto modes, temperature adjustment, wind speed control (low/medium/high/auto), swing on/off, countdown timer 0.5-24h, cloud scheduling with repeat patterns, device sharing (both WAN and Matter), offline alert, OTA upgrade, voice control via Google/Alexa.' That's all I have. Please expand this into a complete, detailed product requirements document with all necessary appendices.",
+      "expected_output": "A detailed, structured PRD that expands the simple checklist into a comprehensive document with multi-condition branching rules, interconnection/exclusion rules, fault code tables, message push specifications, and a functional index appendix.",
+      "assertions": [
+        {
+          "name": "functional_index",
+          "description": "Output includes a functional quick-reference table or appendix mapping features to sections",
+          "type": "llm_judge"
+        },
+        {
+          "name": "multi_condition_rules",
+          "description": "Feature descriptions include multi-condition branching (e.g., temperature/wind speed limits vary by mode — cooling vs. heating vs. dehumidification)",
+          "type": "llm_judge"
+        },
+        {
+          "name": "cross_reference_rules",
+          "description": "Output includes interconnection/exclusion rules or a disabled-rules summary table (e.g., which buttons are invalid in which modes)",
+          "type": "llm_judge"
+        },
+        {
+          "name": "detail_richness",
+          "description": "Each L3 feature includes specific parameters, ranges, default values, and exception handling — not just feature names",
+          "type": "llm_judge"
+        },
+        {
+          "name": "message_push_rules",
+          "description": "Output includes fault codes, message severity levels, and push notification rules (if applicable to the product type)",
+          "type": "llm_judge"
+        }
+      ],
+      "files": []
+    }
+  ]
+}
