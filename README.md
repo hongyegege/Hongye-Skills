@@ -12,7 +12,7 @@
 | 2 | [product-roadmap-writer](#2-product-roadmap-writer五看三定) | 基于「五看三定」方法论生成 B2B/行业产品规划路线图 | 产品规划、路线图撰写 |
 | 3 | [daily-review-manager](#3-daily-review-manager每日复盘) | 接收、记录、整理每日复盘，自动生成周报/月报 | 个人复盘、知识管理 |
 | 4 | [meeting-writer](#4-meeting-writer会议纪要生成) | 将会议内容整理为标准格式会议纪要，自动创建飞书文档 | 会议纪要、Meeting Minutes |
-| 5 | [prd-workflow](#5-prd-workflowprd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入解析 + 模板参照 + 逻辑重构 + 飞书文档创建 | PRD 文档生成、需求整理
+| 5 | [prd-workflow](#5-prd-workflowprd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入 + 双模板匹配（单品导入/平台产品）+ 逻辑重构 + 飞书文档创建 | PRD 文档生成、需求整理
 
 ---
 
@@ -244,10 +244,12 @@
 
 | 路径 | 说明 |
 |------|------|
-| `SKILL.md` | 主入口：触发条件 + 8 步执行流程 + 环境自检 |
-| `reference/PRD-template.md` | 内置通用 PRD 模板（保底格式参照物） |
+| `SKILL.md` | 主入口：触发条件 + 8 步执行流程 + 环境自检 + 模板匹配策略 |
+| `reference/device-import-template.md` | 单品导入模板（设备导入/单品 PRD） |
+| `reference/platform-template.md` | 平台产品模板（平台级产品建设 PRD） |
 | `guides/onboarding.md` | 用户引导：如何配置个人参考知识库 |
 | `assets/logic-reconstruct.md` | 逻辑重构方法论（5 步重构法 + L1-L3 分层规范） |
+| `evals/evals.json` | 评估测试集（4 套用例） |
 
 ---
 
@@ -271,6 +273,7 @@ cp -r Hongye-Skills/<skill-name> ~/.openclaw/workspace/skills/
 
 | 日期 | 更新内容 |
 |------|----------|
+| 2026-05-28 | prd-workflow 升级：新增平台产品模板、原模板重命名为单品导入模板、两个模板均追加评审/编辑/需求申请三表置顶、SKILL.md 增加模板自动匹配策略 |
 | 2026-05-19 | 新增 prd-workflow（PRD 端到端生成工作流）；删除 prd-flow（已被 prd-workflow 替代） |
 | 2026-05-13 | 新增 meeting-writer（会议纪要生成） |
 | 2026-05-08 | 新增 proposal-review-panel（五维评审团） |
