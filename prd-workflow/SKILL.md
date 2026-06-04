@@ -75,6 +75,7 @@ Step 6: PRD 生成 → Step 7: 创建文档 → Step 8: 知识沉淀（可选）
 | 内置 PRD 模板 | 检查本 Skill 目录下 `reference/device-import-template.md` 和 `reference/platform-template.md` | 无格式参照 | 使用纯文本结构输出 |
 | PDF 解析能力 | 检查 pdf 工具可用性 | 无法解析 PDF | 提示用户转换格式或提供文本 |
 | 文档拉取能力 | 检查 feishu_fetch_doc 可用性 | 无法拉取飞书文档 | 要求用户导出为本地文件 |
+| Mermaid 绘图能力 | 检查 `skills/mermaid/SKILL.md` 是否存在 | 无法生成 Mermaid 流程图代码 | 降级为结构化文本流程图 + 状态表 |
 
 **自检逻辑**：
 1. 遍历依赖清单，标记 ✅/⚠️/❌
@@ -226,7 +227,52 @@ Step 6: PRD 生成 → Step 7: 创建文档 → Step 8: 知识沉淀（可选）
 - PK 产品对比使用 ✔/✘ 矩阵
 - 差异写在备注列
 - 单品 PRD：L1-L3 分层结构清晰
-- 平台 PRD：业务流程图优先用飞书画板，未对接时用 Mermaid
+- 平台 PRD：业务流程图优先用飞书画板，未对接时用 Mermaid（见下方「流程图生成策略」）
+
+### 流程图生成策略（Mermaid 集成）
+
+平台 PRD 中的「核心业务逻辑」章节需要包含业务流程图。生成策略如下：
+
+| 优先级 | 条件 | 方案 |
+|--------|------|------|
+| 1 | 飞书画板已对接 | 使用飞书画板绘制（可编辑） |
+| 2 | mermaid skill 已安装 | 读取 `skills/mermaid/references/diagram-selection.md`，选择合适图类型，生成 Mermaid 代码块嵌入文档 |
+| 3 | mermaid skill 未安装 | 降级为结构化文本流程图（见下方） |
+
+**降级方案（无 mermaid skill 时）**：使用结构化文本描述替代 Mermaid：
+
+```markdown
+#### 业务主流程
+
+```
+[用户发起请求] → [系统校验权限] → {权限通过？}
+                                        ├─ 是 → [执行业务逻辑] → [返回结果]
+                                        └─ 否 → [返回403] 
+```
+
+#### 关键流转状态
+
+| 状态 | 触发条件 | 目标状态 |
+|------|---------|----------|
+| 待审核 | 用户提交 | 审核中 |
+| 审核中 | 管理员审批 | 已通过 |
+| 审核中 | 管理员拒绝 | 已拒绝 |
+```
+
+**检测 mermaid skill 是否可用**：
+```
+检查 skills/mermaid/SKILL.md 是否存在
+  → 存在：读取 skills/mermaid/references/diagram-selection.md 获取图类型选择指南
+  → 不存在：自动降级为结构化文本流程图，不影响 PRD 生成流程
+```
+
+**Mermaid 图类型推荐（PRD 场景）**：
+- 业务流程：`flowchart TD`（步骤和分支）
+- 系统交互：`sequenceDiagram`（服务间调用）
+- 状态流转：`stateDiagram-v2`（工单/订单/审批状态）
+
+> 注意：Mermaid 代码在飞书文档中以代码块形式呈现，支持 Mermaid 渲染的客户端可直接显示。
+> 如果飞书不支持渲染，Mermaid 代码本身也是可读的结构化描述。
 
 ---
 
