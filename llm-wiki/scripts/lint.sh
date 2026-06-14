@@ -21,7 +21,45 @@ fi
 
 # --version / -V 参数
 if [[ "${1:-}" == "--version" || "${1:-}" == "-V" ]]; then
-  echo "llm-wiki lint v1.2.0"
+  echo "llm-wiki lint v1.3.0"
+  exit 0
+fi
+
+# --stats 参数：自动统计知识库各项指标，可直接用于更新 INDEX.md 统计摘要
+if [[ "${1:-}" == "--stats" ]]; then
+  WIKI_ROOT="${2:-.}"
+  WIKI_ROOT="$(cd "$WIKI_ROOT" && pwd)"
+  
+  wiki_count=$(find "$WIKI_ROOT" -name "*.md" -not -name "*-source.md" -not -path "*/.git/*" -not -name "SCHEMA.md" -not -name "INDEX.md" -not -name "log.md" -not -name "INGEST-SOP.md" 2>/dev/null | wc -l)
+  source_count=$(find "$WIKI_ROOT" -name "*-source.md" -not -path "*/.git/*" 2>/dev/null | wc -l)
+  image_count=$(find "$WIKI_ROOT" \( -name "*.png" -o -name "*.jpg" -o -name "*.gif" -o -name "*.webp" -o -name "*.svg" \) -not -path "*/.git/*" 2>/dev/null | wc -l)
+  query_count=$(find "$WIKI_ROOT" -path "*/queries/*.md" -not -path "*/.git/*" 2>/dev/null | wc -l)
+  domain_count=$(find "$WIKI_ROOT" -mindepth 1 -maxdepth 1 -type d -not -name ".git" -not -name "queries" 2>/dev/null | wc -l)
+  total_size=$(du -sh "$WIKI_ROOT" 2>/dev/null | cut -f1)
+  
+  echo "## 📊 知识库统计摘要"
+  echo ""
+  echo "| 指标 | 数值 |"
+  echo "|------|------|"
+  echo "| Wiki 页面总数 | $wiki_count |"
+  echo "| Source 文件数 | $source_count |"
+  echo "| 图片资产数 | $image_count |"
+  echo "| 领域数 | $domain_count |"
+  echo "| Query 沉淀数 | $query_count |"
+  echo "| 总占用空间 | $total_size |"
+  echo ""
+  echo "### 各领域分布"
+  echo ""
+  echo "| 领域 | Wiki 页面 | Source |"
+  echo "|------|----------|--------|"
+  for domain_dir in $(find "$WIKI_ROOT" -mindepth 1 -maxdepth 1 -type d -not -name ".git" -not -name "queries" 2>/dev/null | sort); do
+    domain_name=$(basename "$domain_dir")
+    d_wiki=$(find "$domain_dir" -name "*.md" -not -name "*-source.md" 2>/dev/null | wc -l)
+    d_source=$(find "$domain_dir" -name "*-source.md" 2>/dev/null | wc -l)
+    echo "| $domain_name | $d_wiki | $d_source |"
+  done
+  echo ""
+  echo "*生成时间：$(date '+%Y-%m-%d %H:%M')*"
   exit 0
 fi
 
