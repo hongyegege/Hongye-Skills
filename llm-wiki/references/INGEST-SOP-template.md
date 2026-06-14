@@ -44,7 +44,7 @@
   - 绝不正面硬刚微信反爬（滑块验证码无法绕过）
 
 输出：完整 Markdown 文本内容
-详见 SOURCE-ADAPTERS.md
+详见 llm-wiki skill 的 references/SOURCE-ADAPTERS.md（Skill 安装目录下）
 ```
 
 ### Step 2：保存 Source（不可变） ✅

@@ -5,7 +5,23 @@ description: >-
   支持 Ingest（文档入库编译）、Query 沉淀（对话知识存回）、Lint 巡检（健康检查）三大核心工作流，
   多源适配（飞书、微信、网页、PDF、本地文件）。
   当用户需要构建知识库、入库文档、沉淀知识、巡检 Wiki 健康状态时使用。
-version: 1.0.0
+  也适用于用户说“帮我整理这些文档”、“做个知识管理”、“把这篇文章存起来”、
+  “build my wiki”、“ingest this article”、“knowledge management”、“note-taking system”、
+  “个人笔记系统”、“文档归档”、“资料整理入库”等场景。
+  即使用户没有明确说“知识库”，只要涉及将散乱文档结构化为可持续增长的知识体系，都应使用此 Skill。
+compatibility:
+  tools:
+    - read          # 读取本地文件
+    - write         # 写入文件
+    - exec          # 执行命令（git、curl、文件检查等）
+    - web_fetch     # 抓取网页内容
+    - web_search    # 搜索网页（微信镜像等场景）
+  optional_tools:
+    - feishu_fetch_doc   # 飞书文档抓取（需飞书集成）
+    - feishu_doc_media   # 飞书图片/画板下载（需飞书集成）
+    - pdf                # PDF 分析（可选，pdf 来源场景）
+    - browser            # 浏览器自动化（可选，反爬场景兜底）
+version: 1.0.1
 ---
 
 # LLM Wiki — 个人知识库构建系统

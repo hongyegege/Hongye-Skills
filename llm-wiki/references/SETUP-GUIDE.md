@@ -55,11 +55,15 @@ mkdir -p {知识库根目录}/queries
 ```
 读取：references/SCHEMA-template.md
 替换以下变量：
-  {{知识库名称}} → 用户提供的名称
-  {{创建日期}} → 当天日期（YYYY-MM-DD）
-  {{维护者}} → 用户名 + Agent 名
-  {{知识库根目录}} → 用户指定的路径
-  {{#each 领域列表}} → 展开为实际的领域目录条目
+  {知识库名称} → 用户提供的名称
+  {创建日期} → 当天日期（YYYY-MM-DD）
+  {维护者} → 用户名 + Agent 名
+  {知识库根目录} → 用户指定的路径
+
+  领域目录展开规则：
+    SCHEMA-template.md 中有 {领域A}、{领域B} 占位符。
+    用户配置了 N 个领域，就展开 N 个目录条目，每个条目格式相同。
+    例：用户配置「产品,技术,投资」→ 展开为 3 个目录块（product/、tech/、investment/）。
 
 输出：{知识库根目录}/SCHEMA.md
 ```
@@ -163,7 +167,7 @@ Setup 完成后，逐项确认：
 find {知识库根目录} -type f | sort
 
 # 检查变量替换残留
-grep -r '{{' {知识库根目录}/SCHEMA.md
+grep -rP '\{[A-Z\u4e00-\u9fff]' {知识库根目录}/SCHEMA.md
 
 # 检查 Git 状态
 cd {知识库根目录} && git log --oneline
