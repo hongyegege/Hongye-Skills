@@ -22,7 +22,7 @@ compatibility:
     - feishu_doc_media   # 飞书图片/画板下载（需飞书集成）
     - pdf                # PDF 分析（可选，pdf 来源场景）
     - browser            # 浏览器自动化（可选，反爬场景兜底）
-version: 1.4.0
+version: 1.5.0
 ---
 
 # LLM Wiki — 个人知识库构建系统
@@ -54,7 +54,6 @@ version: 1.4.0
 | Query 沉淀 | "沉淀一下"、"这个值得存"、"总结一下存起来" | "save this analysis", "file this back" |
 | 巡检知识库 | "lint"、"巡检"、"知识库健康检查" | "lint", "wiki health check" |
 | 初始化知识库 | "初始化知识库"、"搭建知识库" | "setup wiki", "initialize knowledge base" |
-| 文档管理替代方案 | "notion 替代"、"文档管理"、"笔记系统" | "notion alternative", "documentation", "note-taking system" |
 
 ---
 
@@ -190,41 +189,9 @@ Step 8  git add + commit "[ingest] 网关计费方案设计" + push
 **流程**：
 1. 将回答整理为结构化 Markdown
 2. 保存到 `queries/` 或对应领域目录
-3. 添加 frontmatter 和交叉引用（见下方模板）
+3. 添加 frontmatter 和交叉引用（模板见 `references/QUERY-TEMPLATE.md`）
 4. 更新 INDEX.md + log.md
 5. Git 提交
-
-**Query 页面 frontmatter 模板**：
-```markdown
----
-title: 分析标题
-type: analysis
-category: 相关领域
-created: YYYY-MM-DD
-sources: []        # Query 无外部 source，留空即可
-tags: [标签]
-related: ["../page-a.md", "../page-b.md"]
-trigger: "触发这次沉淀的对话场景描述"
----
-```
-
-**正文结构**：
-```markdown
-# 分析标题
-> 一句话摘要
-
-## 分析背景
-为什么做这次分析，触发的场景是什么。
-
-## 核心发现
-结构化的分析内容。
-
-## 关键原则
-从分析中提炼的经验教训。
-
-## 🔗 关联页面
-- [页面名](../path/page.md) — 关联说明
-```
 
 **与 Ingest 的区别**：
 
@@ -481,6 +448,7 @@ fetched_by: agent-name  # 执行 Ingest 的 Agent 名称（如 secretary-general
 | Lint 巡检清单 | `references/LINT-checklist.md` | 每次巡检时对照执行 |
 | 安装指南 | `references/SETUP-GUIDE.md` | 首次安装 Setup 详细步骤 |
 | 多源适配手册 | `references/SOURCE-ADAPTERS.md` | Ingest Step 1 时查阅具体适配器 |
+| Query 沉淀模板 | `references/QUERY-TEMPLATE.md` | Query 沉淀时查阅 frontmatter + 正文结构 |
 | 故障排除手册 | `references/TROUBLESHOOTING.md` | 遇到问题时查阅解决方案 |
 | Lint 巡检脚本 | `scripts/lint.sh` | 自动化执行 Lint 检查 |
 
@@ -505,23 +473,12 @@ fetched_by: agent-name  # 执行 Ingest 的 Agent 名称（如 secretary-general
 
 ## 十、版本迁移指南
 
-### v1.3.x → v1.4.0
+### 最新版本变更
 
-**变更内容**：INDEX.md 行填写示例、INGEST-SOP/SCHEMA 旧阈值统一、知识库定位机制、Query 页面 frontmatter 模板、fetched_by 命名规范。
+**v1.4.x → v1.5.0**：SKILL.md 瘦身（Query 模板抽到 reference）、空文档/图片下载失败处理指引、版本号统一。
 
-**迁移方式**：无需操作。已生成的知识库内容不受影响。
+**v1.3.x → v1.4.0**：INDEX.md 行填写示例、阈值统一、知识库定位机制、Query frontmatter 模板、fetched_by 规范。
 
-### v1.2.x → v1.3.0
-
-**变更内容**：工具降级矩阵、Wiki 编译质量标准、查询结果处理策略、跨领域文档规则、lint.sh --stats 自动统计、并发编辑指引。
-
-**迁移方式**：无需操作。已生成的知识库内容不受影响。SCHEMA.md 中可手动补充「编译质量标准」和「跨领域规则」两个新章节。
-
-### v1.1.x → v1.2.0
-
-**变更内容**：新增 Ingest 完整示例、页面生命周期管理（更新/删除/合并/查询）、description 同义词扩展、铁律增加原因说明。
-
-**迁移方式**：无需操作。已生成的知识库内容不受影响。
 
 ### 通用迁移原则
 
@@ -535,9 +492,9 @@ fetched_by: agent-name  # 执行 Ingest 的 Agent 名称（如 secretary-general
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| 1.5.0 | 2026-06-14 | F1-F5：SKILL.md 瘦身（Query 模板抽到 reference）、版本号同步、空文档/图片下载失败处理 |
 | 1.4.0 | 2026-06-14 | E1-E6：INDEX 填写示例、阈值统一、知识库定位、Query 模板、fetched_by 规范 |
 | 1.3.0 | 2026-06-14 | D1-D7：工具降级、编译质量标准、查询结果策略、跨领域规则、lint.sh --stats、并发指引 |
 | 1.2.0 | 2026-06-14 | O1-O6：Ingest 示例、页面生命周期、同义词扩展、快速指引、铁律原因说明 |
 | 1.1.0 | 2026-06-14 | P5-P12：Setup 指引增强、错误历史标注、阈值场景化、Query 判断标准、Lint 脚本、FAQ、迁移指南、英文关键词 |
-| 1.0.1 | 2026-06-14 | P1-P4：模板语法修复、路径引用修复、触发描述增强、工具声明新增 |
-| 1.0.0 | 2026-06-14 | 首版：基于 Karpathy LLM Wiki 模式实践提炼，多源适配 |
+| 1.0.1 | 2026-06-14 | P1-P4：模板语法修复、路径引用修复、触发描述增强、工具声明新增（首版基于 Karpathy LLM Wiki 模式） |

@@ -21,7 +21,7 @@ fi
 
 # --version / -V 参数
 if [[ "${1:-}" == "--version" || "${1:-}" == "-V" ]]; then
-  echo "llm-wiki lint v1.3.0"
+  echo "llm-wiki lint v1.5.0"
   exit 0
 fi
 
