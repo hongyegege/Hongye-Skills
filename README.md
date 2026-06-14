@@ -6,13 +6,15 @@
 
 ## 📋 技能总览
 
-| # | 技能名称 | 一句话说明 | 适用场景 |
-|---|----------|-----------|----------|
-| 1 | [proposal-review-panel](#1-proposal-review-panel-五维评审团) | 五维评审团，对智能家居/IoT 洞察报告进行多角色交叉评审 | 报告评审、方案审查 |
-| 2 | [product-roadmap-writer](#2-product-roadmap-writer五看三定) | 基于「五看三定」方法论生成 B2B/行业产品规划路线图 | 产品规划、路线图撰写 |
-| 3 | [daily-review-manager](#3-daily-review-manager每日复盘) | 接收、记录、整理每日复盘，自动生成周报/月报 | 个人复盘、知识管理 |
-| 4 | [meeting-writer](#4-meeting-writer会议纪要生成) | 将会议内容整理为标准格式会议纪要，自动创建飞书文档 | 会议纪要、Meeting Minutes |
-| 5 | [prd-workflow](#5-prd-workflowprd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入 + 双模板匹配（单品导入/平台产品）+ 逻辑重构 + 飞书文档创建 | PRD 文档生成、需求整理
+| # | 技能名称 | 一句话说明 | 版本 | 适用场景 |
+|---|----------|-----------|------|----------|
+| 1 | [proposal-review-panel](#1-proposal-review-panel-五维评审团) | 五维评审团，对智能家居/IoT 洞察报告进行多角色交叉评审 | v1.0 | 报告评审、方案审查 |
+| 2 | [product-roadmap-writer](#2-product-roadmap-writer五看三定) | 基于「五看三定」方法论生成 B2B/行业产品规划路线图 | v1.0 | 产品规划、路线图撰写 |
+| 3 | [daily-review-manager](#3-daily-review-manager每日复盘) | 接收、记录、整理每日复盘，自动生成周报/月报 | v1.0 | 个人复盘、知识管理 |
+| 4 | [meeting-writer](#4-meeting-writer会议纪要生成) | 将会议内容整理为标准格式会议纪要，自动创建飞书文档 | v1.0 | 会议纪要、Meeting Minutes |
+| 5 | [prd-workflow](#5-prd-workflowprd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入 + 双模板匹配 + 逻辑重构 + 飞书文档创建 | v1.0 | PRD 文档生成、需求整理 |
+| 6 | [llm-wiki](#6-llm-wiki个人知识库构建系统) ⭐ | 基于 Karpathy LLM Wiki 模式的知识库构建系统：Ingest 入库 + Query 沉淀 + Lint 巡检 | **v1.5.0** | 知识管理、第二大脑、文档归档 |
+| 7 | [ui-mockup](#7-ui-mockup界面效果图生成) | PRD → 界面效果图 SOP：分析现有 UI → 明确改动点 → 生成结构化 Prompt → AI 出图 | v1.0 | UI 效果图、界面设计、PRD 可视化 |
 
 ---
 
@@ -253,6 +255,130 @@
 
 ---
 
+## 6. llm-wiki（个人知识库构建系统）⭐
+
+> 🏷️ 知识管理 · 第二大脑 · PKM · LLM Wiki · Karpathy · 文档入库
+
+### 功能简介
+
+基于 **Andrej Karpathy 的 LLM Wiki 模式**构建的个人知识库系统。核心思想：**Source（不可变原始文档）→ Wiki（编译后的结构化知识）→ 知识网络（交叉引用）**。
+
+经过 5 轮 Skill Creator 深度审查（37 个问题修复），评分从 7.5 提升至 9.95。
+
+### 三大核心工作流
+
+| 工作流 | 说明 | 触发场景 |
+|--------|------|----------|
+| **Ingest（文档入库）** | 外部文档 → Source 快照 → Wiki 编译 → 交叉引用 | 用户提供文档要求入库 |
+| **Query 沉淀** | 对话中的综合分析 → 存回知识库 | 有价值的问答产出 |
+| **Lint 巡检** | 9 项健康检查（失效链接、未编译、孤立页面等） | 定期维护知识库 |
+
+### 多源适配器
+
+支持 6 种来源类型，统一输出为标准 Source 格式：
+
+| 来源 | 适配器 | 特殊处理 |
+|------|--------|----------|
+| 飞书文档 | `feishu_fetch_doc` | authcode 过期降级 |
+| 微信公众号 | 移动端 UA curl + 镜像站 | 三级降级策略 |
+| 网页/博客 | `web_fetch` | 反爬、登录墙 |
+| 本地文件 | `read` 工具 | GBK→UTF-8 编码 |
+| PDF | `pdf` 分析工具 | 扫描件 OCR |
+| 粘贴文本 | 直接使用 | 格式丢失 |
+
+### 核心特性
+
+| 特性 | 说明 |
+|------|------|
+| 📐 **九步 Ingest SOP** | 去重 → 抓取 → Source → Wiki → 图片 → 索引 → 自检 → 沉淀 → Git |
+| 🛡️ **工具降级矩阵** | optional_tools 不可用时自动降级，流程不卡死 |
+| 📊 **编译质量标准** | 信息保留率 80%+，压缩比 30-60%，好 vs 坏对比示例 |
+| 🔍 **智能查询** | 5 种搜索结果处理策略（0/1-3/4-10/10+/矛盾） |
+| 🏥 **自动化巡检** | `scripts/lint.sh` 支持 `--stats` 自动统计 |
+| 📖 **故障排除手册** | 228 行详细 FAQ，覆盖常见坑点 |
+
+### 使用方式
+
+```bash
+# 1. 复制 Skill 到 OpenClaw
+cp -r Hongye-Skills/llm-wiki ~/.openclaw/workspace/skills/
+
+# 2. 初始化知识库（用户说"帮我建个知识库"即可触发）
+# Agent 会自动执行 Setup 流程
+
+# 3. 入库文档
+# 用户：「帮我把这篇微信文章存到知识库 https://mp.weixin.qq.com/s/xxx」
+
+# 4. 查询知识库
+# 用户：「知识库里关于 Matter 有什么？」
+
+# 5. 定期巡检
+bash ~/.openclaw/workspace/skills/llm-wiki/scripts/lint.sh ~/wiki --stats
+```
+
+### 触发关键词
+
+建知识库、知识管理、入库、second brain、PKM、ingest、wiki health check、第二大脑、文档归档、notion 替代
+
+### 文件清单（9 个文件，~60KB）
+
+```
+llm-wiki/
+├── SKILL.md                        (500行) 技能入口
+├── references/
+│   ├── SCHEMA-template.md          (309行) Wiki 维护规范模板
+│   ├── INGEST-SOP-template.md      (263行) Ingest 九步 SOP
+│   ├── LINT-checklist.md           (243行) Lint 巡检清单
+│   ├── SETUP-GUIDE.md              (241行) 安装初始化指南
+│   ├── SOURCE-ADAPTERS.md          (244行) 多源适配手册
+│   ├── TROUBLESHOOTING.md          (228行) 故障排除手册
+│   └── QUERY-TEMPLATE.md           (58行)  Query 沉淀模板
+└── scripts/
+    └── lint.sh                     (251行) 自动化巡检脚本
+```
+
+---
+
+## 7. ui-mockup（界面效果图生成）
+
+> 🏷️ UI 效果图 · 界面设计 · PRD 可视化 · RASCEF · Atomic Prompting
+
+### 功能简介
+
+**PRD → 界面效果图的结构化编排引擎**，覆盖 6 个步骤：从分析现有 UI 交互逻辑，到明确新增/改动点，再到生成结构化 UI Prompt，最后配合截图喂给 AI 绘图工具输出效果图。
+
+### 6 步执行流程
+
+```
+Step 0  图片预处理    — 自动切分多屏拼接长图（可选）
+Step 1  确认现有逻辑  — 结构化理解当前页面
+Step 2  明确改动点    — 增量思维，只改需要改的
+Step 3  生成 Prompt   — RASCEF + Atomic Prompting 框架
+Step 4  AI 出图       — 截图 + Prompt 喂给绘图工具
+Step 5  评审迭代      — 不满意时的修正路径
+```
+
+### 核心原则
+
+| ❌ 禁止 | ✅ 必须 |
+|---------|---------| 
+| 另起炉灶 | 先确认现有逻辑，再讨论改动 |
+| 改动未描述的区域 | 明确标注"哪些区域不动"和"哪些区域改动" |
+| 一次出图就期望完美 | 预期 2-3 轮迭代 |
+| 跳过 Step 1 | 提供 ASCII 线框图示意改动位置 |
+
+### 使用方式
+
+1. 将 `ui-mockup/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+2. 发送 PRD 内容 + 现有页面截图（可选）
+3. Agent 自动按 6 步流程生成 UI Prompt 并出图
+
+### 触发关键词
+
+出效果图、UI 效果图、界面效果图、生成 UI mockup、根据 PRD 出图、界面设计稿、UI 原型图
+
+---
+
 ## 📦 安装方式
 
 将目标 Skill 文件夹复制到 OpenClaw 的 skills 目录：
@@ -263,21 +389,25 @@ git clone https://github.com/hongyegege/Hongye-Skills.git
 
 # 复制单个 Skill 到 OpenClaw
 cp -r Hongye-Skills/<skill-name> ~/.openclaw/workspace/skills/
+
+# 或直接在 OpenClaw 中使用 clawhub 安装
+clawhub install hongyegege/Hongye-Skills/<skill-name>
 ```
 
-或直接在 OpenClaw 中安装后重启 Gateway 即可生效。
+重启 Gateway 即可生效。
 
 ---
 
 ## 📜 版本记录
 
-| 日期 | 更新内容 |
-|------|----------|
-| 2026-05-28 | prd-workflow 升级：新增平台产品模板、原模板重命名为单品导入模板、两个模板均追加评审/编辑/需求申请三表置顶、SKILL.md 增加模板自动匹配策略 |
-| 2026-05-19 | 新增 prd-workflow（PRD 端到端生成工作流）；删除 prd-flow（已被 prd-workflow 替代） |
-| 2026-05-13 | 新增 meeting-writer（会议纪要生成） |
-| 2026-05-08 | 新增 proposal-review-panel（五维评审团） |
-| 2026-04-xx | 新增 prd-flow、product-roadmap-writer、daily-review-manager |
+| 日期 | 版本 | 更新内容 |
+|------|------|----------|
+| 2026-06-14 | **llm-wiki v1.5.0** | 新增 llm-wiki（个人知识库构建系统），经过 5 轮 Skill Creator 深度审查，37 个问题修复，评分 9.95 |
+| 2026-05-28 | prd-workflow v1.0 | 升级：新增平台产品模板、原模板重命名为单品导入模板、两个模板均追加评审/编辑/需求申请三表置顶、SKILL.md 增加模板自动匹配策略 |
+| 2026-05-19 | prd-workflow | 新增 prd-workflow（PRD 端到端生成工作流）；删除 prd-flow（已被 prd-workflow 替代） |
+| 2026-05-13 | meeting-writer v1.0 | 新增 meeting-writer（会议纪要生成） |
+| 2026-05-08 | proposal-review-panel v1.0 | 新增 proposal-review-panel（五维评审团） |
+| 2026-04-xx | v1.0 | 新增 prd-flow、product-roadmap-writer、daily-review-manager、ui-mockup |
 
 ---
 
