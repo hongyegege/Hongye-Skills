@@ -7,7 +7,8 @@ description: >-
   当用户需要构建知识库、入库文档、沉淀知识、巡检 Wiki 健康状态时使用。
   也适用于用户说"帮我整理这些文档"、"做个知识管理"、"把这篇文章存起来"、
   "build my wiki"、"ingest this article"、"knowledge management"、"note-taking system"、
-  "个人笔记系统"、"文档归档"、"资料整理入库"等场景。
+  "个人笔记系统"、"文档归档"、"资料整理入库"、"第二大脑"、"second brain"、"PKM"、
+  "文档管理"、"documentation"、"notion 替代"、"obsidian 知识库"等场景。
   即使用户没有明确说"知识库"，只要涉及将散乱文档结构化为可持续增长的知识体系，都应使用此 Skill。
 compatibility:
   tools:
@@ -21,7 +22,7 @@ compatibility:
     - feishu_doc_media   # 飞书图片/画板下载（需飞书集成）
     - pdf                # PDF 分析（可选，pdf 来源场景）
     - browser            # 浏览器自动化（可选，反爬场景兜底）
-version: 1.1.0
+version: 1.2.0
 ---
 
 # LLM Wiki — 个人知识库构建系统
@@ -31,18 +32,29 @@ version: 1.1.0
 
 ---
 
+**快速指引** — 根据用户意图直接跳到对应章节：
+- 🆕 首次安装知识库 → [第五节 Setup](#五首次安装流程setup)
+- 📥 用户给文档要求入库 → [第三节 3.1 Ingest](#31-ingest文档入库-外部知识--wiki)
+- 🔍 用户查询知识库内容 → [第三节 3.4 查询](#34-查询-search--知识库检索)
+- 🧠 对话产生了有价值的分析 → [第三节 3.2 Query 沉淀](#32-query-沉淀--内部思考--wiki)
+- 🏥 定期巡检 → 执行 `scripts/lint.sh {知识库根目录}`
+- ❓ 遇到问题 → 查阅 `references/TROUBLESHOOTING.md`
+
+---
+
 ## 一、触发条件
 
 当以下任一情况出现时，激活本 Skill：
 
 | 触发场景 | 中文关键词 | English Keywords |
 |----------|-----------|------------------|
-| 构建个人/团队知识库 | "建知识库"、"知识管理"、"文档归档"、"资料整理入库" | "build my wiki", "knowledge base", "knowledge management" |
+| 构建个人/团队知识库 | "建知识库"、"知识管理"、"文档归档"、"资料整理入库"、"第二大脑"、"PKM" | "build my wiki", "knowledge base", "knowledge management", "second brain", "PKM" |
 | 文档入库 | "入库"、"加到知识库"、"存一下这个文档"、"把这篇文章存起来" | "ingest this", "add to wiki", "save this doc" |
 | 查询知识库 | "知识库里有没有…"、"查一下…"、"之前那个文档…" | "search wiki", "find in knowledge base" |
 | Query 沉淀 | "沉淀一下"、"这个值得存"、"总结一下存起来" | "save this analysis", "file this back" |
 | 巡检知识库 | "lint"、"巡检"、"知识库健康检查" | "lint", "wiki health check" |
 | 初始化知识库 | "初始化知识库"、"搭建知识库" | "setup wiki", "initialize knowledge base" |
+| 文档管理替代方案 | "notion 替代"、"文档管理"、"笔记系统" | "notion alternative", "documentation", "note-taking system" |
 
 ---
 
@@ -66,15 +78,15 @@ version: 1.1.0
     └── analysis-xxx.md
 ```
 
-**铁律**：
-- Source 文件一旦创建，**永不修改**（不可变原则）
-- Wiki 页面可以反复更新、重构、合并
-- 每个 Source 对应一个 Wiki 页面（一一映射）
-- 图片与 source/wiki 同目录存放（就近原则）
+**核心原则**：
+- Source 文件一旦创建就不修改，因为它是知识溯源的"证据链"——修改了就无法追溯知识从何而来
+- Wiki 页面可以反复更新、重构、合并——它是编译产物，不是原始记录
+- 每个 Source 对应一个 Wiki 页面（一一映射），确保每条知识都有据可查
+- 图片与 source/wiki 同目录存放（就近原则），方便 LLM 编译时直接引用
 
 ---
 
-## 三、三大核心工作流
+## 三、核心工作流
 
 ### 3.1 Ingest（文档入库）— 外部知识 → Wiki
 
@@ -103,6 +115,55 @@ Step 8  Git 提交        commit + push（如启用了版本管理）
 - [ ] log.md 已追加记录？
 - [ ] 交叉引用已添加？
 - [ ] Git 已提交？
+
+#### Ingest Example：一篇微信文章入库的完整过程
+
+```
+用户输入：
+  "帮我把这篇微信文章存到知识库 https://mp.weixin.qq.com/s/abc123"
+
+Step 0  去重：git grep "网关计费" → 无匹配 → 继续
+Step 1  抓取：curl -L -H "User-Agent: ...(iPhone)..." → 获得 8KB 正文
+Step 2  保存 Source：
+
+  文件：product/gateway-billing-source.md
+  ──────────────────────────────────────────
+  ---
+  source_type: wechat
+  source_url: https://mp.weixin.qq.com/s/abc123
+  fetched_at: 2026-06-14 14:00
+  fetched_by: agent-secretary
+  ---
+  # 网关计费方案设计与实现
+  （8KB 完整原文...）
+
+Step 3  编译 Wiki：
+
+  文件：product/gateway-billing.md
+  ──────────────────────────────────────────
+  ---
+  title: 网关计费方案
+  type: knowledge
+  category: product
+  created: 2026-06-14
+  updated: 2026-06-14
+  sources: [gateway-billing-source.md]
+  tags: [网关, 计费, 分户计费]
+  related: ["../t-building/billing.md", "../hardware/gateway.md"]
+  ---
+  # 网关计费方案
+  > 网关设备如何与楼宇计费系统联动的技术方案。
+  ## 核心逻辑
+  网关采集电表数据 → 上传至 T-Building → 计费引擎计算...
+  ## 🔗 关联页面
+  - [T-Building 分户计费](../t-building/billing.md) — 计费数据下游消费方
+  - [楼宇网关](../hardware/gateway.md) — 数据采集上游设备
+
+Step 4  图片：提取 2 张架构图 → product/gateway-billing-images/
+Step 5  INDEX.md 新增条目 + log.md 追加记录
+Step 6  自检：source 8KB > 3KB 阈值 ✅
+Step 8  git add + commit "[ingest] 网关计费方案设计" + push
+```
 
 ---
 
@@ -142,8 +203,6 @@ Step 8  Git 提交        commit + push（如启用了版本管理）
 | 知识性质 | 编译他人知识 | 积累自己的思考 |
 | 价值 | 建立知识基础 | 产生知识复利 |
 
-**铁律**：有价值的对话结束后，**主动询问用户**是否需要 Query 沉淀，不要等用户提醒。
-
 ---
 
 ### 3.3 Lint 巡检 — Wiki 健康检查
@@ -169,6 +228,72 @@ Step 8  Git 提交        commit + push（如启用了版本管理）
 - Lint 报告追加到 log.md
 - 🔴 级问题直接修复
 - 🟡 级问题汇总后请用户确认
+
+---
+
+### 3.4 页面生命周期管理 — 更新/删除/合并/查询
+
+除了 Ingest（创建）之外，知识库运营还涉及以下操作：
+
+#### 更新 Wiki 页面（Update）
+
+**触发场景**：源文档有新版、信息过时、用户要求更新。
+
+```
+流程：
+1. 获取新内容（同 Ingest Step 1）
+2. 保存为新的 -source.md（版本号追加，如 xxx-v2-source.md）
+3. 在已有 Wiki 页面上追加/修改内容，更新 frontmatter 的 updated 和 sources 字段
+4. 更新 INDEX.md 更新日期
+5. log.md 追加 "[update] 页面名 — 更新原因"
+6. Git 提交
+
+注意：旧 source 保留不删（不可变原则），新 source 与旧 source 并存
+```
+
+#### 删除 Wiki 页面（Delete）
+
+**触发场景**：信息完全过时且被新页面替代、用户明确要求删除。
+
+```
+流程：
+1. 向用户确认删除范围（仅删 Wiki？还是 source 一起删？）
+2. 检查所有引用该页面的交叉引用链接
+3. 更新引用方页面，移除失效链接或替换为新页面
+4. 删除 Wiki + source + 图片目录（如用户确认全删）
+5. 更新 INDEX.md（移除条目 + 更新统计）
+6. log.md 追加 "[delete] 页面名 — 删除原因"
+7. Git 提交（注意 pre-push hook 可能拦截大量删除）
+```
+
+#### 合并页面（Merge）
+
+**触发场景**：两个页面内容高度重叠、粒度太细需要合并。
+
+```
+流程：
+1. 确定保留页面（A）和被合并页面（B）
+2. 将 B 的关键内容追加到 A，更新 A 的 frontmatter（sources 加入 B 的 source）
+3. 在 B 的位置放置重定向说明："> 本页面已合并至 [A](../path/to/A.md)"
+4. 更新所有引用 B 的交叉引用链接，改为指向 A
+5. 更新 INDEX.md（移除 B 条目，更新 A 摘要）
+6. log.md 追加 "[merge] B → A"
+7. Git 提交
+```
+
+#### 查询（Search）— 知识库检索
+
+**触发场景**：用户说"查一下…"、"知识库里有没有…"
+
+```
+查询策略（按优先级）：
+1. INDEX.md 全文搜索：grep "关键词" INDEX.md → 快速定位相关页面
+2. 页面正文搜索：grep -r "关键词" {知识库根目录}/ --include="*.md" -l → 列出匹配文件
+3. 标签搜索：grep -r "tags:.*关键词" {知识库根目录}/ --include="*.md" → 按标签匹配
+4. 读取匹配页面，提取关键信息，组织为结构化回答
+
+注意：查询结果应标注来源页面路径，方便用户追溯原文
+```
 
 ---
 
@@ -257,16 +382,16 @@ fetched_by: agent-name
 
 ## 六、铁律（所有操作必须遵守）
 
-| # | 铁律 | 违反后果 |
-|---|------|----------|
-| 1 | Source 文件创建后**永不修改** | 知识溯源链断裂 |
-| 2 | 入库前**必须先做去重检查**（Step 0） | 重复内容污染知识库 |
-| 3 | Source 必须包含**完整原文**，禁止只存摘要/大纲 | 信息不可逆丢失 |
-| 4 | Source 文件低于最小阈值**必须报警**（见第八节阈值表） | 说明只拿到了摘要 |
-| 5 | 每次入库后**必须更新 INDEX.md + log.md** | 索引与实际脱节 |
-| 6 | 交叉引用使用**标准 Markdown 链接**，不用 [[双链]] | 兼容性问题 |
-| 7 | 有价值的对话后**主动询问**是否沉淀 | 知识复利机会丢失 |
-| 8 | Lint 报告中的 🔴 级问题**必须立即修复** | 知识库健康度下降 |
+| # | 铁律 | 原因 |
+|---|------|------|
+| 1 | Source 文件创建后**永不修改** | 它是知识溯源的证据链，修改后无法追溯原始信息 |
+| 2 | 入库前**必须先做去重检查**（Step 0） | 重复入库会导致知识碎片化，同一内容多个版本难以维护 |
+| 3 | Source 必须包含**完整原文**，禁止只存摘要/大纲 | Source 是"原始快照"，如果只存摘要就失去了与 Wiki 的区分意义 |
+| 4 | Source 文件低于最小阈值**必须报警**（见第八节阈值表） | 文件过小说明抓取可能只拿到了摘要，信息不可逆丢失 |
+| 5 | 每次入库后**必须更新 INDEX.md + log.md** | 索引是知识库的唯一入口，脱节后用户和 Agent 都无法找到内容 |
+| 6 | 交叉引用使用**标准 Markdown 链接**，不用 [[双链]] | 标准 Markdown 在任何编辑器中都能渲染，双链依赖特定工具 |
+| 7 | 有价值的对话后**主动询问**是否沉淀 | 对话中的综合分析如果不存下来，下次就得重新推导，知识复利归零 |
+| 8 | Lint 报告中的 🔴 级问题**必须立即修复** | 失效链接和未编译页面会破坏知识网络的完整性 |
 
 ---
 
@@ -303,11 +428,11 @@ fetched_by: agent-name
 
 ## 九、版本迁移指南
 
-### v1.0.x → v1.1.0
+### v1.1.x → v1.2.0
 
-**变更内容**：触发关键词双语化、Query 沉淀判断标准细化、Source 阈值场景化、新增故障排除手册和 Lint 脚本。
+**变更内容**：新增 Ingest 完整示例、页面生命周期管理（更新/删除/合并/查询）、description 同义词扩展、铁律增加原因说明。
 
-**迁移方式**：无需操作。这些变更只影响 Skill 模板和指导文件，已生成的知识库内容不受影响。
+**迁移方式**：无需操作。已生成的知识库内容不受影响。
 
 ### 通用迁移原则
 
@@ -321,6 +446,7 @@ fetched_by: agent-name
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| 1.2.0 | 2026-06-14 | O1-O6：Ingest 示例、页面生命周期、同义词扩展、快速指引、铁律原因说明 |
 | 1.1.0 | 2026-06-14 | P5-P12：Setup 指引增强、错误历史标注、阈值场景化、Query 判断标准、Lint 脚本、FAQ、迁移指南、英文关键词 |
 | 1.0.1 | 2026-06-14 | P1-P4：模板语法修复、路径引用修复、触发描述增强、工具声明新增 |
 | 1.0.0 | 2026-06-14 | 首版：基于 Karpathy LLM Wiki 模式实践提炼，多源适配 |

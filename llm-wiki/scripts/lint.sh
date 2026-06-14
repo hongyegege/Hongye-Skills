@@ -5,6 +5,26 @@
 
 set -euo pipefail
 
+# --help / -h 参数
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+  echo "LLM Wiki Lint — 知识库健康巡检工具"
+  echo ""
+  echo "Usage: bash lint.sh [知识库根目录]"
+  echo ""
+  echo "  默认使用当前目录。检查 9 项 Wiki 健康指标并输出报告。"
+  echo "  报告可直接追加到 log.md 作为巡检记录。"
+  echo ""
+  echo "检查项：Source 编译、交叉引用、孤立页面、frontmatter、"
+  echo "        过时声明、命名规范、INDEX 同步、Source 完整性"
+  exit 0
+fi
+
+# --version / -V 参数
+if [[ "${1:-}" == "--version" || "${1:-}" == "-V" ]]; then
+  echo "llm-wiki lint v1.2.0"
+  exit 0
+fi
+
 WIKI_ROOT="${1:-.}"
 WIKI_ROOT="$(cd "$WIKI_ROOT" && pwd)"
 
