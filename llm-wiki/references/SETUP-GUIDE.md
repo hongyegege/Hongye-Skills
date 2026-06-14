@@ -163,7 +163,7 @@ git push -u origin main
 Setup 完成后，逐项确认：
 
 - [ ] **目录骨架**：根目录 + 各领域子目录 + queries/ 已创建？
-- [ ] **SCHEMA.md**：变量已全部替换（无 `{{xxx}}` 残留）？
+- [ ] **SCHEMA.md**：变量已全部替换（无 `{xxx}` 残留）？
 - [ ] **INGEST-SOP.md**：已复制到知识库根目录？
 - [ ] **INDEX.md**：已创建，包含各领域空表格？
 - [ ] **log.md**：已创建，包含首条 Setup 记录？
