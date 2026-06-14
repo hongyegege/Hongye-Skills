@@ -22,7 +22,7 @@ compatibility:
     - feishu_doc_media   # 飞书图片/画板下载（需飞书集成）
     - pdf                # PDF 分析（可选，pdf 来源场景）
     - browser            # 浏览器自动化（可选，反爬场景兜底）
-version: 1.3.0
+version: 1.4.0
 ---
 
 # LLM Wiki — 个人知识库构建系统
@@ -190,9 +190,41 @@ Step 8  git add + commit "[ingest] 网关计费方案设计" + push
 **流程**：
 1. 将回答整理为结构化 Markdown
 2. 保存到 `queries/` 或对应领域目录
-3. 添加 frontmatter 和交叉引用
+3. 添加 frontmatter 和交叉引用（见下方模板）
 4. 更新 INDEX.md + log.md
 5. Git 提交
+
+**Query 页面 frontmatter 模板**：
+```markdown
+---
+title: 分析标题
+type: analysis
+category: 相关领域
+created: YYYY-MM-DD
+sources: []        # Query 无外部 source，留空即可
+tags: [标签]
+related: ["../page-a.md", "../page-b.md"]
+trigger: "触发这次沉淀的对话场景描述"
+---
+```
+
+**正文结构**：
+```markdown
+# 分析标题
+> 一句话摘要
+
+## 分析背景
+为什么做这次分析，触发的场景是什么。
+
+## 核心发现
+结构化的分析内容。
+
+## 关键原则
+从分析中提炼的经验教训。
+
+## 🔗 关联页面
+- [页面名](../path/page.md) — 关联说明
+```
 
 **与 Ingest 的区别**：
 
@@ -286,6 +318,11 @@ Step 8  git add + commit "[ingest] 网关计费方案设计" + push
 **触发场景**：用户说"查一下…"、"知识库里有没有…"
 
 ```
+知识库定位策略（先找到知识库在哪）：
+1. 查找 SCHEMA.md 文件：find workspace/ -name "SCHEMA.md" -path "*/wiki/*" → 其所在目录即知识库根
+2. 检查默认路径：workspace/wiki/
+3. 如找不到，询问用户知识库位置，记住后写入 Agent 工作文件（如 TOOLS.md）以便后续复用
+
 搜索策略（按优先级）：
 1. INDEX.md 全文搜索：grep "关键词" INDEX.md → 快速定位相关页面
 2. 页面正文搜索：grep -r "关键词" {知识库根目录}/ --include="*.md" -l → 列出匹配文件
@@ -356,7 +393,8 @@ PDF 文件/URL              .pdf 后缀或 PDF MIME  → PDF Adapter
 source_type: feishu | wechat | web | local | pdf | direct
 source_url: 原始链接（如有）
 fetched_at: YYYY-MM-DD HH:MM
-fetched_by: agent-name
+fetched_by: agent-name  # 执行 Ingest 的 Agent 名称（如 secretary-general、my-agent）
+                       # 建议保持统一，便于追溯是哪个 Agent 入库的
 ---
 
 # 文档标题
@@ -467,6 +505,12 @@ fetched_by: agent-name
 
 ## 十、版本迁移指南
 
+### v1.3.x → v1.4.0
+
+**变更内容**：INDEX.md 行填写示例、INGEST-SOP/SCHEMA 旧阈值统一、知识库定位机制、Query 页面 frontmatter 模板、fetched_by 命名规范。
+
+**迁移方式**：无需操作。已生成的知识库内容不受影响。
+
 ### v1.2.x → v1.3.0
 
 **变更内容**：工具降级矩阵、Wiki 编译质量标准、查询结果处理策略、跨领域文档规则、lint.sh --stats 自动统计、并发编辑指引。
@@ -491,6 +535,7 @@ fetched_by: agent-name
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| 1.4.0 | 2026-06-14 | E1-E6：INDEX 填写示例、阈值统一、知识库定位、Query 模板、fetched_by 规范 |
 | 1.3.0 | 2026-06-14 | D1-D7：工具降级、编译质量标准、查询结果策略、跨领域规则、lint.sh --stats、并发指引 |
 | 1.2.0 | 2026-06-14 | O1-O6：Ingest 示例、页面生命周期、同义词扩展、快速指引、铁律原因说明 |
 | 1.1.0 | 2026-06-14 | P5-P12：Setup 指引增强、错误历史标注、阈值场景化、Query 判断标准、Lint 脚本、FAQ、迁移指南、英文关键词 |
