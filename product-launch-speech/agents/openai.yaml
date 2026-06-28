@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Launch Speech"
+  short_description: "Generate launch-style HTML product demos"
+  default_prompt: "Use $product-launch-speech to create a launch-style HTML product introduction page and editable design notes."

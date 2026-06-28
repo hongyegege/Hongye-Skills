@@ -15,6 +15,7 @@
 | 5 | [prd-workflow](#5-prd-workflowprd-端到端生成工作流) | PRD 端到端生成工作流：多格式输入 + 双模板匹配 + 逻辑重构 + 飞书文档创建 | v1.0 | PRD 文档生成、需求整理 |
 | 6 | [llm-wiki](#6-llm-wiki个人知识库构建系统) ⭐ | 基于 Karpathy LLM Wiki 模式的知识库构建系统：Ingest 入库 + Query 沉淀 + Lint 巡检 | **v1.5.0** | 知识管理、第二大脑、文档归档 |
 | 7 | [ui-mockup](#7-ui-mockup界面效果图生成) | PRD → 界面效果图 SOP：分析现有 UI → 明确改动点 → 生成结构化 Prompt → AI 出图 | v1.0 | UI 效果图、界面设计、PRD 可视化 |
+| 8 | [product-launch-speech](#8-product-launch-speech产品发布演示页) | 生成自包含 HTML 产品发布演示页 + 可编辑 page-design.md，支持沉浸式舞台风格与增量修改 | v1.0 | 产品发布、Keynote 式介绍页、交互 Demo |
 
 ---
 
@@ -379,6 +380,50 @@ Step 5  评审迭代      — 不满意时的修正路径
 
 ---
 
+## 8. product-launch-speech（产品发布演示页）
+
+> 🏷️ 产品发布 · Keynote · 交互 Demo · HTML 演示页 · page-design.md
+
+### 功能简介
+
+将产品文档、README、功能清单、演示脚本或现有 `page-design.md` 转化为 **自包含的 HTML 产品发布演示页**（`index.html`）及配套的 **可编辑设计说明**（`page-design.md`）。页面风格偏向沉浸式舞台演示，而非普通营销落地页。
+
+### 核心产出
+
+| 产出 | 说明 |
+|------|------|
+| `index.html` | 单文件自包含 HTML：内联 CSS/JS，含 Hero、Live Demo、Features、Key Visual 等核心区块 |
+| `page-design.md` | 编辑契约文档，支持后续小改动时无需重读全部原始材料 |
+
+### 执行流程
+
+```
+素材调研 → 页面蓝图 → 生成 HTML + MD → validate_artifact.py 校验 → 交互冒烟测试
+```
+
+### 模板与参考
+
+| 路径 | 用途 |
+|------|------|
+| `assets/templates/immersive-launch/` | 沉浸式舞台风格起始模板 |
+| `references/template-registry.md` | 模板选择与扩展规则 |
+| `references/style-presets.md` | 视觉风格预设 |
+| `references/interaction-patterns.md` | 交互与 Demo 模式 |
+| `references/page-design-contract.md` | page-design.md 结构契约 |
+| `scripts/validate_artifact.py` | HTML + MD 产物校验 |
+
+### 使用方式
+
+1. 将 `product-launch-speech/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+2. 提供产品材料（文档、README、功能列表、现有 HTML 或 page-design.md）
+3. Agent 生成演示页并运行校验脚本，确保结构合规
+
+### 触发关键词
+
+产品发布、launch page、Keynote 式介绍、产品演示页、HTML demo、page-design、发布演讲、interactive demo
+
+---
+
 ## 📦 安装方式
 
 将目标 Skill 文件夹复制到 OpenClaw 的 skills 目录：
@@ -402,6 +447,7 @@ clawhub install hongyegege/Hongye-Skills/<skill-name>
 
 | 日期 | 版本 | 更新内容 |
 |------|------|----------|
+| 2026-06-29 | product-launch-speech v1.0 | 新增 product-launch-speech（产品发布演示页）：自包含 HTML + page-design.md + 沉浸式模板 + 校验脚本 |
 | 2026-06-14 | **llm-wiki v1.5.0** | 新增 llm-wiki（个人知识库构建系统），经过 5 轮 Skill Creator 深度审查，37 个问题修复，评分 9.95 |
 | 2026-05-28 | prd-workflow v1.0 | 升级：新增平台产品模板、原模板重命名为单品导入模板、两个模板均追加评审/编辑/需求申请三表置顶、SKILL.md 增加模板自动匹配策略 |
 | 2026-05-19 | prd-workflow | 新增 prd-workflow（PRD 端到端生成工作流）；删除 prd-flow（已被 prd-workflow 替代） |
