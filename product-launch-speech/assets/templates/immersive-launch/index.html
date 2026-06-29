@@ -2943,7 +2943,7 @@ footer.legend {
   <nav class="anchor-nav">
     <a href="#s1"><span class="num">01</span> 交互流程</a>
     <a href="#s2"><span class="num">02</span> 组件库</a>
-    <a href="#s3"><span class="num">03</span> Key Visual</a>
+
   </nav>
 
   <div class="intro">
@@ -3542,85 +3542,7 @@ footer.legend {
     </div>
   </section>
 
-  <!-- ============ SECTION 3 · KEY VISUAL ============ -->
-  <section class="section section--hero" id="s3">
-    <div class="section__head">
-      <div class="section__num">03 · Key Visual</div>
-      <h3 class="section__title">PPT Key Visual · 可直接截图使用</h3>
-      <p class="section__sub">一个静帧，完整传达「沉浸管家 · 持续对话 · 生成式 UI」三层含义，推荐直接截图嵌入 PPT 主视觉页。</p>
-    </div>
 
-    <div class="hero-stage">
-      <div class="hero-slot">
-        <div class="phone">
-          <div class="screen screen--live">
-            <div class="status-bar"><span>9:41</span><div class="status-bar__right"><span>●●●</span><span>5G</span><span>96%</span></div></div>
-            <div class="live-hdr">
-              <div class="mode-toggle mode-toggle--super" role="tablist">
-                <div class="mode-toggle__thumb"></div>
-                <button class="mode-toggle__seg" type="button" data-mode="normal" role="tab" aria-label="小T">
-                  <svg class="mode-toggle__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3.5" y="1" width="9" height="14" rx="2.2"/>
-                    <line x1="6.5" y1="12.8" x2="9.5" y2="12.8" stroke-width="1.2"/>
-                  </svg>
-                </button>
-                <button class="mode-toggle__seg" type="button" data-mode="super" role="tab" aria-label="超级小T">
-                  <svg class="mode-toggle__icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M6.2 1 C6.2 5 7.1 6 11 6.2 C7.1 6.4 6.2 7.4 6.2 11.5 C6.2 7.4 5.3 6.4 1.4 6.2 C5.3 6 6.2 5 6.2 1 Z"/>
-                    <path d="M12 8.2 C12 9.8 12.4 10.3 14 10.5 C12.4 10.7 12 11.2 12 12.8 C12 11.2 11.6 10.7 10 10.5 C11.6 10.3 12 9.8 12 8.2 Z" opacity="0.72"/>
-                  </svg>
-                  <span class="mode-toggle__label">AI</span>
-                </button>
-              </div>
-              <div class="live-hdr__close">×</div>
-            </div>
-            <div class="orb-wrap">
-              <canvas class="orb-canvas-static" id="orb-canvas-kv"></canvas>
-            </div>
-            <div class="transcript">
-              <div class="state-card state-card--speaking">
-                <div class="state-card__icon">
-                  <svg viewBox="0 0 22 22" fill="currentColor"><rect class="sc-b1" x="1.5" y="7" width="3.5" height="9" rx="1.75"/><rect class="sc-b2" x="6.5" y="4" width="3.5" height="14" rx="1.75"/><rect class="sc-b3" x="11.5" y="5.5" width="3.5" height="11" rx="1.75"/><rect class="sc-b4" x="16.5" y="7.5" width="3" height="7" rx="1.5" opacity="0.5"/></svg>
-                </div>
-                <span class="state-card__label">正在回应</span>
-              </div>
-              <div class="transcript__text transcript__text--ai">好的，帮你准备好 4 个动作</div>
-            </div>
-            <div class="card-stack">
-              <div class="card-stack__wrap">
-                <div class="live-card--peek"></div>
-                <div class="live-card">
-                  <div class="live-card__label">
-                    <div class="tag">SCENE PREVIEW</div>
-                    <div class="count">4 ACTIONS · 可微调</div>
-                  </div>
-                  <div class="live-card__title">看电视 · 客厅</div>
-                  <div class="action-list">
-                    <div class="action-list__item"><div class="ic">▶</div><div class="txt">电视开机</div><div class="val">ON</div></div>
-                    <div class="action-list__item"><div class="ic">❄</div><div class="txt">空调 · 制冷模式</div><div class="val">COOL</div></div>
-                    <div class="action-list__item"><div class="ic">◐</div><div class="txt">空调 · 温度 26°C</div><div class="val">26°C</div></div>
-                    <div class="action-list__item"><div class="ic">≈</div><div class="txt">空调 · 风速 50%</div><div class="val">50%</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="live-bottom">
-              <button class="lb-pill lb-pill--active" aria-label="语音输入">
-                <span class="lb-pill__glow"></span>
-                <span class="lb-pill__bars"><i></i><i></i><i></i><i></i><i></i></span>
-              </button>
-              <div class="lb-home"></div>
-            </div>
-          </div>
-        </div>
-        <div class="hero-caption">
-          <div class="hero-caption__num">FORM B · LIVE</div>
-          <div class="hero-caption__title">沉浸管家 · 持续对话</div>
-          <div class="hero-caption__sub">Speaking state · Scene Preview · Generative UI</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <footer class="legend">
     <div>全屏 Live 态 · 持续对话引擎 · 生成式 UI 组件库 · 小 T 人设</div>
@@ -4521,9 +4443,7 @@ footer.legend {
   // Instantiate interactive orb
   const particleOrb = new ParticleOrb(orbCanvas, 'idle');
 
-  // Key-visual static orb (speaking state)
-  const kvCanvas = document.getElementById('orb-canvas-kv');
-  if (kvCanvas) new ParticleOrb(kvCanvas, 'speaking');
+
 
   // ------- Event bindings -------
   promptChips.addEventListener('click', (e) => {

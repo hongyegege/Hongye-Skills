@@ -5,16 +5,16 @@
 - Template path: `assets/templates/immersive-launch/index.html`
 - Design notes path: `assets/templates/immersive-launch/page-design.md`
 - Use for: product launch demos, AI assistant demos, IoT/control surfaces, code-product showcases, internal review pages, and keynote-style feature introductions.
-- Structure: Hero, interactive live demo, flow controls, generated UI component library, Key Visual.
+- Structure: Hero, interactive live demo, flow controls, generated UI component library.
 - Default style: dark stage, blue AI accent, glass panels, phone/demo device frame, animated state transitions.
 
 ## Replacement Rules
 
 When adapting the template:
 
-- Replace product identity in `<title>`, header brand text, Hero copy, demo cards, component titles, and Key Visual captions.
+- Replace product identity in `<title>`, header brand text, Hero copy, demo cards, and component titles.
 - Replace demo scenes in the `SCENES` object before changing the visual shell.
-- Keep section anchors or equivalent semantic markers for Hero, Live Demo, Features, and Key Visual.
+- Keep section anchors or equivalent semantic markers for Hero, Live Demo, and Features.
 - Keep the page self-contained unless the user explicitly asks for a framework or external asset pipeline.
 - Prefer root-scoped event listeners for new interactions. Do not add duplicate IDs.
 

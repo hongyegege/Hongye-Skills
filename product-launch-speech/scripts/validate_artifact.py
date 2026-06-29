@@ -39,12 +39,6 @@ SECTION_PATTERNS = {
         re.compile(r"Component Library", re.IGNORECASE),
         re.compile(r'data-section=["\']features["\']', re.IGNORECASE),
     ],
-    "key visual": [
-        re.compile(r'id=["\']key-visual["\']', re.IGNORECASE),
-        re.compile(r'id=["\']s3["\']', re.IGNORECASE),
-        re.compile(r"Key Visual", re.IGNORECASE),
-        re.compile(r'data-section=["\']key-visual["\']', re.IGNORECASE),
-    ],
 }
 
 DESIGN_SECTIONS = [

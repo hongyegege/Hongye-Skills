@@ -61,5 +61,5 @@ Read only the reference files needed for the current task. For a normal first-ge
 
 - The first viewport must communicate the product, not explain the generator.
 - The page must feel like a live product launch demo: concrete product states, visible feature evidence, and interaction moments.
-- The generated HTML must contain exactly one document root, no duplicate IDs, one main inline script, and the core sections: Hero, Live Demo, Features, and Key Visual.
+- The generated HTML must contain exactly one document root, no duplicate IDs, one main inline script, and the core sections: Hero, Live Demo, and Features.
 - The MD companion must be detailed enough that a future Codex run can make small edits without re-reading all original product material.

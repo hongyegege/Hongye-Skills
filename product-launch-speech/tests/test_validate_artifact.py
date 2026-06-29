@@ -21,7 +21,6 @@ VALID_HTML = """<!DOCTYPE html>
   <section id="hero"><h1>Demo Product</h1></section>
   <section id="live-demo"><button data-scene="demo">Try</button></section>
   <section id="features"><article>Feature</article></section>
-  <section id="key-visual"><canvas id="orb-canvas"></canvas></section>
 </main>
 <script>
 (() => {
@@ -43,7 +42,6 @@ Dark stage with blue AI accent.
 - Hero
 - Live Demo
 - Features
-- Key Visual
 
 ## Interaction Design
 The demo button changes the presentation state.

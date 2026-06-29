@@ -48,10 +48,4 @@ Use when adapting the template to code products.
 - Include architecture, API, config, or test evidence only when it helps the launch story.
 - Avoid dumping raw code unless the audience is technical.
 
-## Key Visual
 
-Always include one static frame that can be screenshotted into slides.
-
-- It should contain the product identity, core UI state, and one proof of value.
-- It should not be a generic decorative hero.
-- Keep it visually consistent with the live demo section.
