@@ -7,6 +7,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "validate_artifact.py"
+TEMPLATE_HTML = ROOT / "assets" / "templates" / "immersive-launch" / "index.html"
+TEMPLATE_DESIGN = ROOT / "assets" / "templates" / "immersive-launch" / "page-design.md"
 
 
 VALID_HTML = """<!DOCTYPE html>
@@ -105,6 +107,37 @@ class ValidateArtifactTests(unittest.TestCase):
             self.assertIn("Design document is required", result.stdout)
 
         self.with_tempdir(check)
+
+    def test_default_template_contains_ioc_launch_capabilities(self):
+        html = TEMPLATE_HTML.read_text(encoding="utf-8")
+        design = TEMPLATE_DESIGN.read_text(encoding="utf-8")
+
+        required_html = [
+            'id="page-root"',
+            'body data-theme="dark"',
+            'id="themeToggle"',
+            'body[data-theme="light"]',
+            "localStorage",
+            'data-section="architecture"',
+            "const scenes =",
+            'data-scene="device_control"',
+            'id="editOverlay"',
+            "root.addEventListener",
+        ]
+        for needle in required_html:
+            self.assertIn(needle, html)
+
+        required_design = [
+            "暗黑 UI",
+            "浅色 UI",
+            "scenes",
+            "技术架构",
+            "用户说一句话",
+            "确认执行",
+            "主题切换",
+        ]
+        for needle in required_design:
+            self.assertIn(needle, design)
 
 
 if __name__ == "__main__":

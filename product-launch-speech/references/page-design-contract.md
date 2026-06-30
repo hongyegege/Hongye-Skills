@@ -26,6 +26,8 @@ List the important titles, subtitles, CTA labels, scene prompts, card headings, 
 
 Explain how to request small edits through the MD. Include what should be changed together, such as brand name plus title, palette plus CSS variables, or demo scene plus card copy.
 
+For immersive launch templates, also note synchronization rules for navigation anchors, `scenes` data, confirm-button copy, theme variables, and architecture-board layers when those elements are present.
+
 ## Edit Priority
 
 When editing from a revised `page-design.md`:
@@ -38,3 +40,5 @@ When editing from a revised `page-design.md`:
 ## Minimum Detail
 
 The MD must let a future Codex run make copy, section, color, and interaction changes without re-reading the original product docs. Do not summarize with vague labels like "modern style" or "several sections"; name concrete visual and content decisions.
+
+For pages with dark/light modes, state how `body[data-theme]`, the theme toggle label, and the dark/light CSS tokens work. For pages with technical architecture, name the visible layers and where the architecture section sits in the page order.

@@ -1,6 +1,6 @@
 ---
 name: product-launch-speech
-description: Generate or modify self-contained HTML product-launch presentation pages and matching editable page-design Markdown notes. Use when Codex needs to turn a product, codebase, README, feature list, demo script, launch narrative, brand style, or existing page-design.md into an interactive product-release style HTML demo, keynote-style product introduction page, or fast incremental HTML update from design notes.
+description: Use when Codex needs to turn product docs, codebases, READMEs, feature lists, demo scripts, launch narratives, brand notes, or existing page-design.md into a self-contained interactive product-release HTML page with matching editable design notes.
 ---
 
 # Product Launch Speech
@@ -9,7 +9,7 @@ description: Generate or modify self-contained HTML product-launch presentation 
 
 Create a launch-style `index.html` and a matching `page-design.md` that can be used for later small edits. Favor a polished, self-contained, interactive product demo page over a marketing landing page.
 
-Use the cleaned template at `assets/templates/immersive-launch/index.html` as the starting point for immersive, stage-like pages. Use `assets/templates/immersive-launch/page-design.md` as the companion documentation model.
+Use `assets/templates/immersive-launch/index.html` as the starting point for immersive stage pages. The default example is an IOC / AI-agent product launch page with dark and light themes, a multi-section keynote narrative, `scenes`-driven live demo, confirmation actions, parameter tuning overlay, and a technical architecture board. Use `assets/templates/immersive-launch/page-design.md` as the companion documentation model.
 
 ## Workflow
 
@@ -23,13 +23,15 @@ Use the cleaned template at `assets/templates/immersive-launch/index.html` as th
    - Page sections and speaker flow.
    - Interactive demo states and user-triggered moments.
    - Visual system: palette, typography, density, motion, and imagery.
+   - Audience translation: how to explain technical capability to management, operators, or non-technical viewers.
    - Copy inventory: titles, subtitles, button labels, scene prompts, and card copy.
 
 3. Generate artifacts:
    - Create `index.html` as a single self-contained HTML document.
    - Create `page-design.md` with the required sections from `references/page-design-contract.md`.
    - Avoid remote runtime dependencies by default. Inline CSS and JavaScript unless the user explicitly asks for a framework project.
-   - Keep all new event binding scoped to one page root. Avoid duplicate IDs and avoid adding new global functions.
+   - Keep all new event binding scoped to one page root, preferably `#page-root`. Avoid duplicate IDs and avoid adding new global functions.
+   - When adapting the default template, update product identity, navigation anchors, `scenes`, confirm-button copy, theme variables, and the architecture board together.
 
 4. Validate before reporting completion:
    - Run `scripts/validate_artifact.py <path-to-index.html> --design <path-to-page-design.md>`.
@@ -62,4 +64,6 @@ Read only the reference files needed for the current task. For a normal first-ge
 - The first viewport must communicate the product, not explain the generator.
 - The page must feel like a live product launch demo: concrete product states, visible feature evidence, and interaction moments.
 - The generated HTML must contain exactly one document root, no duplicate IDs, one main inline script, and the core sections: Hero, Live Demo, and Features.
+- For AI-agent, platform, or operations products, prefer the default narrative frame: user says one thing, the assistant understands intent, routes to an agent, asks for confirmation when needed, and leaves traceable results.
+- If a page includes theme switching, keep the dark and light tokens in sync and document the `body[data-theme]` behavior in `page-design.md`.
 - The MD companion must be detailed enough that a future Codex run can make small edits without re-reading all original product material.

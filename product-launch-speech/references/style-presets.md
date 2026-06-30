@@ -4,12 +4,12 @@
 
 Use by default for the immersive launch template.
 
-- Background: black or near-black presentation stage.
-- Accent: saturated blue for AI, active states, highlights, and trusted actions.
-- Surfaces: translucent dark panels, subtle borders, restrained blur.
+- Background: black or near-black presentation stage, with a complete `body[data-theme="light"]` override when the page will be shown in bright rooms or on projectors.
+- Accent: saturated blue for AI recognition and routing, green for execution and energy/value results, amber for risk/data attention, coral for governance warnings, violet for access or architecture layers.
+- Surfaces: translucent dark panels, dashboard consoles, architecture boards, subtle borders, restrained blur.
 - Typography: system sans, compact tracking, large direct headline.
-- Motion: breathing glow, status transitions, card expansion, subtle particle/canvas effects.
-- Best for: AI assistants, smart home, control systems, launch demos, futuristic product moments.
+- Motion: status transitions, progressive step highlights, card expansion, theme-safe hover states, subtle background grid or console effects.
+- Best for: AI assistants, IOC/control systems, smart building products, operations platforms, launch demos, futuristic product moments.
 
 ## minimal-white
 
@@ -38,3 +38,5 @@ Use by default for the immersive launch template.
 ## Choosing A Preset
 
 If the user gives no style preference, choose `ai-stage-dark`. If the product is operational SaaS, choose `enterprise-saas`. If the user provides brand colors, choose `brand-led` and document the chosen palette in `page-design.md`.
+
+For the default immersive template, keep dark and light token sets paired. When changing `:root` colors, also update `body[data-theme="light"]` component overrides and describe both modes in `page-design.md`.
