@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "title": "设备分享 Demo",
+    "purpose": "演示分享、二维码和成员管理的离线交互",
+    "audience": "产品评审",
+    "frame": "phone",
+    "language": "zh-CN",
+    "offline": true,
+    "assumptions": []
+  },
+  "theme": {
+    "tokens": {"brand": "#2f6bff", "surface": "#ffffff"},
+    "font": "system-ui",
+    "assets": []
+  },
+  "products": [
+    {"id": "productA", "name": "产品 A", "theme": {"brand": "#2f6bff", "dark": "#1e4dcc", "soft": "#eef3ff"}, "capabilities": {"manage": true}},
+    {"id": "productB", "name": "产品 B", "theme": {"brand": "#8a5bd1", "dark": "#6840aa", "soft": "#f4efff"}, "capabilities": {"manage": false}}
+  ],
+  "components": ["demo-shell", "qr-state", "contact-list", "account-input", "confirmation-modal", "toast"],
+  "screens": [
+    {"id": "share", "title": "分享首页", "entry": true},
+    {"id": "account", "title": "账号输入"},
+    {"id": "manage", "title": "成员管理", "visibleWhen": {"capability": "manage"}},
+    {"id": "qr", "title": "二维码详情"}
+  ],
+  "states": ["normal", "loading", "failed", "expired", "empty", "filled", "confirm", "success"],
+  "actions": [
+    {"id": "reset", "target": "reset", "from": "*", "to": "share"},
+    {"id": "go-home", "target": "go-home", "from": "*", "to": "share"},
+    {"id": "open-account", "target": "open-account", "from": "share", "to": "account"},
+    {"id": "open-manage", "target": "open-manage", "from": "share", "to": "manage"},
+    {"id": "open-qr", "target": "open-qr", "from": "share", "to": "qr"},
+    {"id": "back", "target": "back", "from": "account|manage|qr", "to": "share"},
+    {"id": "refresh-qr", "target": "qr-stage", "from": "share|qr", "to": "share|qr"},
+    {"id": "clear-input", "target": "clear-input", "from": "account", "to": "account"},
+    {"id": "lookup-user", "target": "lookup-user", "from": "account", "to": "confirm"},
+    {"id": "select-user", "target": "select-user", "from": "share", "to": "confirm"},
+    {"id": "confirm-share", "target": "confirm-share", "from": "confirm", "to": "share"},
+    {"id": "clear-recent", "target": "clear-recent", "from": "share", "to": "confirm"},
+    {"id": "confirm-clear", "target": "confirm-clear", "from": "confirm", "to": "share"},
+    {"id": "delete-contact", "target": "delete-contact", "from": "manage", "to": "confirm"},
+    {"id": "confirm-delete", "target": "confirm-delete", "from": "confirm", "to": "manage"},
+    {"id": "close-modal", "target": "close-modal", "from": "confirm", "to": "*"}
+  ],
+  "data": {"recent": "synthetic demo users", "shared": "synthetic demo users"},
+  "flows": [
+    {"id": "share-from-recent", "steps": ["share", "select-user", "confirm-share", "success"]},
+    {"id": "share-by-account", "steps": ["share", "open-account", "lookup-user", "confirm-share", "success"]},
+    {"id": "refresh-qr", "steps": ["share", "refresh-qr", "loading", "normal"]},
+    {"id": "switch-empty-state", "steps": ["share", "clear-recent", "confirm-clear", "empty"]}
+  ],
+  "acceptanceFlows": [
+    {"id": "share-from-recent", "actions": ["select-user", "confirm-share"], "expect": "toast:分享成功"},
+    {"id": "share-by-account", "actions": ["open-account", "lookup-user", "confirm-share"], "expect": "toast:分享成功"},
+    {"id": "refresh-qr", "actions": ["open-qr", "refresh-qr"], "expect": "state:loading->normal"},
+    {"id": "switch-empty-state", "actions": ["clear-recent", "confirm-clear"], "expect": "state:empty"},
+    {"id": "reset", "actions": ["reset"], "expect": "screen:share"}
+  ]
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Product Demo Builder"
+  short_description: "把 PRD 编译成离线可交互产品 Demo"
+  brand_color: "#2F6BFF"
+  default_prompt: "Use $product-demo-builder to turn this product brief into an offline interactive demo."
+policy:
+  allow_implicit_invocation: true

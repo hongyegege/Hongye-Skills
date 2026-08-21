@@ -16,6 +16,7 @@
 | 6 | [llm-wiki](#6-llm-wiki个人知识库构建系统) ⭐ | 基于 Karpathy LLM Wiki 模式的知识库构建系统：Ingest 入库 + Query 沉淀 + Lint 巡检 | **v1.5.0** | 知识管理、第二大脑、文档归档 |
 | 7 | [ui-mockup](#7-ui-mockup界面效果图生成) | PRD → 界面效果图 SOP：分析现有 UI → 明确改动点 → 生成结构化 Prompt → AI 出图 | v1.0 | UI 效果图、界面设计、PRD 可视化 |
 | 8 | [product-launch-speech](#8-product-launch-speech产品发布演示页) | 生成自包含 HTML 产品发布演示页 + 可编辑 page-design.md，支持沉浸式舞台风格与增量修改 | v1.0 | 产品发布、Keynote 式介绍页、交互 Demo |
+| 9 | [product-demo-builder](#9-product-demo-builder产品交互-demo-构建) | 将 PRD、产品方案或 HTML 编译为离线可点击 Demo，配套 manifest、状态机和验收路径 | v1.0 | 交互 Demo、离线原型、产品评审 |
 
 ---
 
@@ -424,6 +425,32 @@ Step 5  评审迭代      — 不满意时的修正路径
 
 ---
 
+## 9. product-demo-builder（产品交互 Demo 构建）
+
+> 🏷️ 离线 Demo · 可点击原型 · 交互状态 · manifest 验收
+
+### 功能简介
+
+将 PRD、产品描述、解决方案、Markdown/文本思维导图或已有 HTML 编译为一套可直接双击打开的离线产品 Demo，默认提供左侧演示控制台、右侧舞台和手机设备框，并通过真实 DOM 控件呈现导航、输入、弹窗、加载、成功/失败、空状态、Toast 与重置等状态。
+
+### 核心产出
+
+| 文件 | 说明 |
+|------|------|
+| `index.html` | 自包含 HTML、CSS、JavaScript，可离线双击打开 |
+| `demo-manifest.json` | 产品、页面、状态、动作、流程和验收路径定义 |
+| `verification-report.md` | 静态验证、烟测结果、降级项和待确认项 |
+
+### 使用方式
+
+1. 将 `product-demo-builder/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+2. 提供 PRD、产品方案、Markdown 思维导图或已有 HTML，并说明要制作交互 Demo
+3. Skill 会先完成信息确认，再按 manifest 组合通用交互并运行静态校验
+
+### 触发关键词
+
+交互 Demo、可点击原型、产品演示 HTML、离线 Demo、产品 Demo、PRD 编译、交互路径
+
 ## 📦 安装方式
 
 将目标 Skill 文件夹复制到 OpenClaw 的 skills 目录：
@@ -446,6 +473,7 @@ clawhub install hongyegege/Hongye-Skills/<skill-name>
 ## 📜 版本记录
 
 | 日期 | 版本 | 更新内容 |
+| 2026-08-21 | product-demo-builder v1.0 | 新增 product-demo-builder（离线可交互产品 Demo）：manifest、交互状态、模板与校验脚本 |
 |------|------|----------|
 | 2026-06-29 | product-launch-speech v1.0 | 新增 product-launch-speech（产品发布演示页）：自包含 HTML + page-design.md + 沉浸式模板 + 校验脚本 |
 | 2026-06-14 | **llm-wiki v1.5.0** | 新增 llm-wiki（个人知识库构建系统），经过 5 轮 Skill Creator 深度审查，37 个问题修复，评分 9.95 |
