@@ -1,6 +1,6 @@
 # Hongye-Skills
 
-宏也株式会社（Hongye Co., Ltd.）内部 Skill 仓库，收录面向 OpenClaw 的 AI Agent 技能模块。每个 Skill 均可独立安装到 OpenClaw 环境中使用。
+Hongye-Skills 是宏也团队维护的 AI Agent 技能（Skill）仓库，收录可独立安装、开箱即用的技能模块，兼容 OpenClaw、Codex、Cursor、Claude Code、WorkBuddy、Muse 等主流 Agent 环境。
 
 ---
 
@@ -17,6 +17,7 @@
 | 7 | [ui-mockup](#7-ui-mockup界面效果图生成) | PRD → 界面效果图 SOP：分析现有 UI → 明确改动点 → 生成结构化 Prompt → AI 出图 | v1.0 | UI 效果图、界面设计、PRD 可视化 |
 | 8 | [product-launch-speech](#8-product-launch-speech产品发布演示页) | 生成自包含 HTML 产品发布演示页 + 可编辑 page-design.md，支持沉浸式舞台风格与增量修改 | v1.0 | 产品发布、Keynote 式介绍页、交互 Demo |
 | 9 | [product-demo-builder](#9-product-demo-builder产品交互-demo-构建) | 将 PRD、产品方案或 HTML 编译为离线可点击 Demo，配套 manifest、状态机和验收路径 | v1.0 | 交互 Demo、离线原型、产品评审 |
+| 10 | [explain-ladder](#10-explain-ladder四层讲解法) | Karpathy 四层讲解法：ASD-STE100 → 图表 → HTML 交互页 → 解说视频，四级递进讲清任意主题 | v1.0 | 知识讲解、概念科普、技术文档解读 |
 
 ---
 
@@ -48,7 +49,7 @@
 
 ### 使用方式
 
-1. 将 `proposal-review-panel/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `proposal-review-panel/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 上传报告/方案/规划文档，并要求「评审」或「五维评审」
 3. Agent 自动按 5 个角色依次输出评审意见
 
@@ -98,7 +99,7 @@
 
 ### 使用方式
 
-1. 将 `product-roadmap-writer/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `product-roadmap-writer/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 提供规划主题（如"商用空调智能化产品规划"）
 3. Agent 自动按五看三定方法论生成规划文档
 
@@ -137,7 +138,7 @@
 
 ### 使用方式
 
-1. 将 `daily-review-manager/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `daily-review-manager/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 发送文字或语音，包含关键词即可触发
 3. 随时可要求生成周报/月报
 
@@ -181,7 +182,7 @@
 
 ### 使用方式
 
-1. 将 `meeting-writer/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `meeting-writer/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 发送会议内容（录音转写稿、讨论要点、会议记录草稿等）
 3. Agent 自动整理并创建飞书文档，返回文档链接
 
@@ -236,7 +237,7 @@
 
 ### 使用方式
 
-1. 将 `prd-workflow/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `prd-workflow/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 发送需求材料（文件/URL/文本），要求"写 PRD"、"生成需求文档"等
 3. Agent 自动解析 → 确认 → 重构 → 创建飞书文档，返回文档链接
 
@@ -302,8 +303,8 @@
 ### 使用方式
 
 ```bash
-# 1. 复制 Skill 到 OpenClaw
-cp -r Hongye-Skills/llm-wiki ~/.openclaw/workspace/skills/
+# 1. 复制 Skill 到你所用 Agent 的 skills 目录
+cp -r Hongye-Skills/llm-wiki <你所用 Agent 的 skills 目录>/
 
 # 2. 初始化知识库（用户说"帮我建个知识库"即可触发）
 # Agent 会自动执行 Setup 流程
@@ -315,7 +316,7 @@ cp -r Hongye-Skills/llm-wiki ~/.openclaw/workspace/skills/
 # 用户：「知识库里关于 Matter 有什么？」
 
 # 5. 定期巡检
-bash ~/.openclaw/workspace/skills/llm-wiki/scripts/lint.sh ~/wiki --stats
+bash <你所用 Agent 的 skills 目录>/llm-wiki/scripts/lint.sh ~/wiki --stats
 ```
 
 ### 触发关键词
@@ -371,7 +372,7 @@ Step 5  评审迭代      — 不满意时的修正路径
 
 ### 使用方式
 
-1. 将 `ui-mockup/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `ui-mockup/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 发送 PRD 内容 + 现有页面截图（可选）
 3. Agent 自动按 6 步流程生成 UI Prompt 并出图
 
@@ -415,7 +416,7 @@ Step 5  评审迭代      — 不满意时的修正路径
 
 ### 使用方式
 
-1. 将 `product-launch-speech/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `product-launch-speech/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 提供产品材料（文档、README、功能列表、现有 HTML 或 page-design.md）
 3. Agent 生成演示页并运行校验脚本，确保结构合规
 
@@ -443,7 +444,7 @@ Step 5  评审迭代      — 不满意时的修正路径
 
 ### 使用方式
 
-1. 将 `product-demo-builder/` 文件夹复制到 OpenClaw 的 `skills/` 目录
+1. 将 `product-demo-builder/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
 2. 提供 PRD、产品方案、Markdown 思维导图或已有 HTML，并说明要制作交互 Demo
 3. Skill 会先完成信息确认，再按 manifest 组合通用交互并运行静态校验
 
@@ -451,28 +452,59 @@ Step 5  评审迭代      — 不满意时的修正路径
 
 交互 Demo、可点击原型、产品演示 HTML、离线 Demo、产品 Demo、PRD 编译、交互路径
 
+## 10. explain-ladder（四层讲解法）
+
+> 🏷️ 知识讲解 · Karpathy · ASD-STE100 · 可视化讲解
+
+### 功能简介
+
+基于 **Andrej Karpathy 2026-10-02 提出的讲解四层级理论**：当 AI 输出速度超过人类理解速度，瓶颈不在生成而在理解。把任意主题按四级递进讲清楚，一层比一层更易理解。
+
+### 四层递进
+
+| 层级 | 格式 | 说明 |
+|------|------|------|
+| 第一级 | **ASD-STE100 技术语言** | 简化技术英语：一句话只说一件事、操作句不超 20 词、全主动语态，极度精准、无歧义 |
+| 第二级 | **图表可视化** | 思维导图/架构图，突出模块关系与数据流向，一眼看清整体结构 |
+| 第三级 | **HTML 交互网页** | 可点击、带动画的单文件网页，通过按钮/滑杆动态查看不同部分 |
+| 第四级 | **解说视频** | 模仿 3Blue1Brown 风格的解说视频脚本 + 配音方案（本地免费 TTS 或 ElevenLabs） |
+
+> Karpathy 本人建议日常使用"80% of the way to ASD-STE100"，完整规范偏生硬时可降级，保留短句与主动语态。
+
+### 输出约定
+
+- 第 1–2 级直接在对话中输出；第 3 级交付独立 HTML 文件；第 4 级默认输出分镜脚本 + 配音方案
+- 一次只讲一层，用户要求升级时再往上走
+
+### 使用方式
+
+1. 将 `explain-ladder/` 文件夹复制到你所用 Agent 的 `skills/` 目录（见[安装方式](#-安装方式)）
+2. 发送主题并指定层级，如"按第 3 层给我讲清楚这个概念"
+3. Agent 按对应层级格式输出讲解
+
+### 触发关键词
+
+按第 X 层讲清楚、四层讲解、Karpathy 讲解法、explain ladder、ASD-STE100 讲解
+
+---
+
 ## 📦 安装方式
 
-将目标 Skill 文件夹复制到 OpenClaw 的 skills 目录：
-
+1. 克隆本仓库：
 ```bash
-# 克隆本仓库
 git clone https://github.com/hongyegege/Hongye-Skills.git
-
-# 复制单个 Skill 到 OpenClaw
-cp -r Hongye-Skills/<skill-name> ~/.openclaw/workspace/skills/
-
-# 或直接在 OpenClaw 中使用 clawhub 安装
-clawhub install hongyegege/Hongye-Skills/<skill-name>
 ```
+2. 将目标 Skill 文件夹（如 `Hongye-Skills/llm-wiki`）复制到你所用 Agent 的 skills 目录
+3. 重启 Agent 使 Skill 生效
 
-重启 Gateway 即可生效。
+各 Agent 的 skills 目录位置请参考其官方文档（例如 OpenClaw 为 `~/.openclaw/workspace/skills/`，Claude Code 为 `~/.claude/skills/`）。
 
 ---
 
 ## 📜 版本记录
 
 | 日期 | 版本 | 更新内容 |
+| 2026-10-09 | explain-ladder v1.0 | 新增 explain-ladder（Karpathy 四层讲解法）：ASD-STE100 技术语言 → 图表可视化 → HTML 交互网页 → 3Blue1Brown 风格解说视频 |
 | 2026-08-21 | product-demo-builder v1.0 | 新增 product-demo-builder（离线可交互产品 Demo）：manifest、交互状态、模板与校验脚本 |
 |------|------|----------|
 | 2026-06-29 | product-launch-speech v1.0 | 新增 product-launch-speech（产品发布演示页）：自包含 HTML + page-design.md + 沉浸式模板 + 校验脚本 |
@@ -483,8 +515,3 @@ clawhub install hongyegege/Hongye-Skills/<skill-name>
 | 2026-05-08 | proposal-review-panel v1.0 | 新增 proposal-review-panel（五维评审团） |
 | 2026-04-xx | v1.0 | 新增 prd-flow、product-roadmap-writer、daily-review-manager、ui-mockup |
 
----
-
-## 📝 贡献说明
-
-本仓库收录宏也团队内部创建的 OpenClaw Skill。如需贡献或反馈，请联系秘书长。
