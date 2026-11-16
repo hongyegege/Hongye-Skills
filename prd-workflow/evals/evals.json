@@ -48,6 +48,52 @@
         {"name": "user_template_priority", "description": "采用用户指定结构，不强制四章、概要方案或十字段表，不附加未要求的功能。", "type": "llm_judge"}
       ],
       "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "仅做模拟，不调用远端服务：按内置模板规划一份含概要方案的飞书 PRD。环境没有 lark-doc 和 lark-whiteboard 技能，但连接器支持创建画板、读回文档与画板预览。业务是用户提交、云端校验、设备确认后完成。请说明应使用的结构和工具路径。",
+      "expected_output": "采用五章及5.x详情，需求目标描述价值，核心功能表放在概要方案；按可用连接器文档使用原生画板，不因技能缺失拒绝或假设CLI存在。",
+      "assertions": [
+        {"name": "capability_not_brand", "description": "根据已知连接器能力规划，不把特定技能或命令当硬依赖，不实际写入远端。", "type": "llm_judge"},
+        {"name": "conditional_structure", "description": "完整使用五章分支：概要方案4、详情5及5.x，目标为价值说明而非重复功能表。", "type": "llm_judge"}
+      ],
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "仅做模拟，不调用远端服务：飞书PRD正文和两张原生画板已经写入且读回引用成功，但当前工具不能预览、导出图片或截图。用户要求的交付需要画板视觉检查。请报告状态并说明下一步。",
+      "expected_output": "区分已创建与未完成视觉校验，说明受阻的检查项，不重新创建画板，不宣称全部完成。",
+      "assertions": [
+        {"name": "honest_partial_completion", "description": "正确报告画板已创建但视觉检查未完成，不虚构截图、检查记录或成功验收，也不擅自降级。", "type": "llm_judge"}
+      ],
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "仅做模拟：用户要求飞书PRD和原生画板，但当前环境只能写本地Markdown，既不能创建飞书文档也不能创建画板。请说明可完成的部分和交付状态。不要调用外部服务。",
+      "expected_output": "可以准备本地草稿及图表源码，明确飞书文档和画板未完成，等待用户决定替代形式，不声称本地草稿等同最终飞书交付。",
+      "assertions": [
+        {"name": "blocked_delivery", "description": "如实列出未完成项，继续独立草稿工作，不假定用户已同意替代交付，不伪造飞书链接。", "type": "llm_judge"}
+      ],
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "本次给你一份参考模板链接，请本次生成时参照。你是否已经自动配置为所有后续会话的默认模板？材料是否保证只在本地处理？不要保存或修改设置。",
+      "expected_output": "说明本次使用不等于跨会话配置；数据处理取决于工具与服务，无法保证仅在本地。遵守不保存或修改设置的要求。",
+      "assertions": [
+        {"name": "persistence_and_privacy", "description": "不声称自动记忆或永久配置，不承诺仅本地处理，不产生持久化或权限变更。", "type": "llm_judge"}
+      ],
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "仅规划交付方式，不创建文件：使用内置模板写多端任务同步PRD，最终输出PDF。请说明整体业务架构图和业务流程图采用何种图表及交付文件，如何检查。",
+      "expected_output": "架构采用分组分层图，流程采用自上而下流程图，将Mermaid渲染为兼容的SVG/PNG嵌入PDF并交付源码，检查语法、可读性和图文一致性。",
+      "assertions": [
+        {"name": "rendered_delivery", "description": "不把Mermaid代码块作为PDF中唯一图表，保留源文件并说明视觉检查；不虚构尚未执行的渲染和检查结果。", "type": "llm_judge"}
+      ],
+      "files": []
     }
   ]
 }
