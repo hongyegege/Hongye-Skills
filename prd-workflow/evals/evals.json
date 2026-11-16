@@ -3,118 +3,49 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "I have an Excel file with feature requirements for multiple portable AC models (PSS fixed-frequency, PDS fixed-frequency, PDS inverter). Each row contains a feature name, feature description, and which models support it. The data is complete but unstructured — the same feature like temperature control is described differently across rows, and there's no consistent grouping. Please help me organize this into a standardized PRD with L1-L3 hierarchy, feature matrix with PK product comparison, and appendices.",
-      "expected_output": "A complete L1-L3 structured PRD with feature overview, function matrix organized by domain, PK product comparison table using ✔/✘ markers, interconnection/exclusion rules, and appendices.",
+      "prompt": "请用内置模板写设备名称修改功能的 Markdown PRD。已确认：管理员从设备设置进入，名称为1至20个字符，点击保存后服务端保存成功再返回设置页；失败停留并提示重试。其他信息未知。",
+      "expected_output": "采用四章基础结构和十字段功能表，保留已知规则，将未知信息标为待确认，不扩展无依据的功能。",
       "assertions": [
-        {
-          "name": "l1_l3_structure",
-          "description": "Output follows a clear L1 (functional domain) → L2 (functional group) → L3 (specific feature) three-level hierarchy",
-          "type": "llm_judge"
-        },
-        {
-          "name": "pk_comparison_matrix",
-          "description": "Multi-product features use ✔/✘ comparison matrix with differences noted in remarks column",
-          "type": "llm_judge"
-        },
-        {
-          "name": "complete_sections",
-          "description": "PRD includes core sections: product overview, feature matrix, interconnection/exclusion rules, fault codes & messaging, certification strategy, and appendices",
-          "type": "llm_judge"
-        },
-        {
-          "name": "no_copy_paste",
-          "description": "Output is not a copy-paste of raw input — includes merged common items and extracted shared rules",
-          "type": "llm_judge"
-        }
+        {"name": "default_structure", "description": "四章基础结构、连续编号、十字段详情表与功能总览对应，没有为了简单需求强加概要方案。", "type": "llm_judge"},
+        {"name": "evidence_boundary", "description": "保留给定长度、权限和保存规则；未知默认值、错误码等标记待确认而非编造。", "type": "llm_judge"}
       ],
       "files": []
     },
     {
       "id": 2,
-      "prompt": "Here's a PRD template from our existing product (Matter portable AC PSL/PDL/PDM). I need you to write a PRD for a new product (PSS/PDS series) based on this template structure. The new product has similar features but with some differences: the default cooling temperature is 16°C instead of 18°C, it supports heating mode up to 30°C, and there's a new Bluetooth generator (ICA) feature only on the inverter model. Please follow the template's section structure, table format, and appendix style.",
-      "expected_output": "A PRD for the new PSS/PDS products that mirrors the template's structure (sections, table formats, appendix style) while correctly incorporating the new product's unique features and differences.",
+      "prompt": "用内置模板写能源预测与调度的 Markdown PRD。云端读取历史发电、用电及电价数据，预测未来24小时，生成每15分钟一段的计划并下发设备执行；界面展示预测和计划。安全约束优先于收益目标。准确率公式、刷新频率及数据不足处理还未确定。",
+      "expected_output": "包含概要方案及十字段功能详情，说明依赖和数据流；使用 Mermaid 架构图及必要流程图，并将未确定的指标和运行规则明确标记。",
       "assertions": [
-        {
-          "name": "template_structure_match",
-          "description": "Section structure, table format, and appendix style match the provided template",
-          "type": "llm_judge"
-        },
-        {
-          "name": "new_product_content",
-          "description": "Content reflects the new PSS/PDS product features, not copied from the template's original product",
-          "type": "llm_judge"
-        },
-        {
-          "name": "capability_extension",
-          "description": "New capabilities not in the template (e.g., Bluetooth generator/ICA, updated temperature ranges) are correctly added and documented",
-          "type": "llm_judge"
-        },
-        {
-          "name": "appendix_consistent",
-          "description": "Appendices (interconnection/exclusion rules, power-on/off state tables) follow the template's format and style",
-          "type": "llm_judge"
-        }
+        {"name": "overview_and_dependencies", "description": "概要方案、核心功能与详情对应，目标不重复功能清单，章节编号连续。", "type": "llm_judge"},
+        {"name": "specialized_rules", "description": "区分计划粒度和刷新频率，明确约束优先级，未知指标、确认机制、过期或兜底规则不被编造。", "type": "llm_judge"},
+        {"name": "markdown_diagrams", "description": "Mermaid 图置于表格外，图文一致；架构分组清晰，流程包含已知路径，未知分支注明待确认。", "type": "llm_judge"}
       ],
       "files": []
     },
     {
       "id": 3,
-      "prompt": "I'm giving you a messy set of feature descriptions for a commercial air conditioning product. The same temperature control logic is described in 3 different places with slightly different numbers (16-32°C in one place, 18-32°C in another, 16-30°C in a third). Wind speed settings are mentioned under both 'control' and 'mode' sections with conflicting defaults. Some rules contradict each other — e.g., one section says auto mode supports temperature adjustment, another says it doesn't. The PK product names are mixed with feature descriptions. Please help me reorganize this into a clean, standardized PRD.",
-      "expected_output": "A reorganized, deduplicated PRD with resolved conflicts, extracted common rules, and a clear logical structure without contradictions.",
+      "prompt": "用内置模板整理一份 PRD：同一型号同一版本的温度调节范围在两份材料中分别为16至32度和18至30度；自动模式一处写可调温，另一处写不可调。暂无其他权威依据。",
+      "expected_output": "归并重复功能，列出冲突来源和候选规则并标记待确认，先完成不依赖冲突结论的部分。",
       "assertions": [
-        {
-          "name": "duplicate_merged",
-          "description": "Repeated feature descriptions (e.g., temperature logic mentioned 3 times) are merged into a single, unified description",
-          "type": "llm_judge"
-        },
-        {
-          "name": "conflicts_resolved",
-          "description": "Conflicting rules (e.g., different temperature ranges, contradictory auto mode behavior) are identified and either resolved or explicitly marked for confirmation",
-          "type": "llm_judge"
-        },
-        {
-          "name": "common_rules_extracted",
-          "description": "Features common across multiple products are extracted into independent modules rather than repeated under each product",
-          "type": "llm_judge"
-        },
-        {
-          "name": "logical_clarity",
-          "description": "Output is logically consistent — no contradictory statements remain in the final PRD",
-          "type": "llm_judge"
-        }
+        {"name": "conflict_handling", "description": "不擅自选择范围、不同时陈述相冲突的确定规则，不从常识推导模式行为。", "type": "llm_judge"}
       ],
       "files": []
     },
     {
       "id": 4,
-      "prompt": "I have a simple feature checklist for a smart air conditioning product: 'needs network pairing (scan QR code), supports cooling/heating/dehumidification/fan/auto modes, temperature adjustment, wind speed control (low/medium/high/auto), swing on/off, countdown timer 0.5-24h, cloud scheduling with repeat patterns, device sharing (both WAN and Matter), offline alert, OTA upgrade, voice control via Google/Alexa.' That's all I have. Please expand this into a complete, detailed product requirements document with all necessary appendices.",
-      "expected_output": "A detailed, structured PRD that expands the simple checklist into a comprehensive document with multi-condition branching rules, interconnection/exclusion rules, fault code tables, message push specifications, and a functional index appendix.",
+      "prompt": "使用内置模板创建飞书 PRD，包含概要方案：用户发起设备同步，云端检查权限，通过后下发，设备确认成功则完成，超时提示重试；无权限时终止。请生成整体业务架构图及完整业务流程图。",
+      "expected_output": "在飞书文档对应位置生成有内容的原生画板，并检查预览；工具或权限受限时明确报告未完成内容。",
       "assertions": [
-        {
-          "name": "functional_index",
-          "description": "Output includes a functional quick-reference table or appendix mapping features to sections",
-          "type": "llm_judge"
-        },
-        {
-          "name": "multi_condition_rules",
-          "description": "Feature descriptions include multi-condition branching (e.g., temperature/wind speed limits vary by mode — cooling vs. heating vs. dehumidification)",
-          "type": "llm_judge"
-        },
-        {
-          "name": "cross_reference_rules",
-          "description": "Output includes interconnection/exclusion rules or a disabled-rules summary table (e.g., which buttons are invalid in which modes)",
-          "type": "llm_judge"
-        },
-        {
-          "name": "detail_richness",
-          "description": "Each L3 feature includes specific parameters, ranges, default values, and exception handling — not just feature names",
-          "type": "llm_judge"
-        },
-        {
-          "name": "message_push_rules",
-          "description": "Output includes fault codes, message severity levels, and push notification rules (if applicable to the product type)",
-          "type": "llm_judge"
-        }
+        {"name": "native_whiteboards", "description": "可用时使用飞书原生画板并核对图文与预览，不以 Mermaid 代码块、图片或空画板冒充完成；受阻时如实说明。", "type": "llm_judge"}
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "本次请覆盖内置格式，采用我指定的两部分模板：功能清单、业务规则。只写已知内容：管理员可以关闭离线提醒，关闭后不再发出离线通知。",
+      "expected_output": "遵从用户明确指定的结构，保留已知规则，必要未知内容标为待确认。",
+      "assertions": [
+        {"name": "user_template_priority", "description": "采用用户指定结构，不强制四章、概要方案或十字段表，不附加未要求的功能。", "type": "llm_judge"}
       ],
       "files": []
     }
